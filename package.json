@@ -1,7 +1,7 @@
 {
-  "name": "design-system",
+  "name": "focal",
   "version": "1.0.0",
-  "description": "Ailany's design system.",
+  "description": "Focal design system.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "format": "prettier --write ./**/*.{js,ts}",
     "lint": "tslint -p tsconfig.json"
   },
-  "author": "",
+  "author": "Ailany",
   "license": "ISC",
   "devDependencies": {
     "prettier": "^2.8.8",
