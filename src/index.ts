@@ -1,1 +1,5 @@
-export const Greeter = (name: string) => `Hello ${name}`;
+import Button from './components/Button';
+import Container from './helpers/Container';
+
+export const Components = [Button, Container];
+
