@@ -1,4 +1,5 @@
 // Styles (load tokens + reset once at import time)
+import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/reset.css';
 

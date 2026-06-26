@@ -6,15 +6,24 @@ import { Button, Card, Col, Divider, Row } from '../index';
 const DEFAULTS = {
   accentHex:  '#5b5bd6',
   radius:     6,          // px — maps to --radius-md; others scale from it
-  fontSans:   'system' as 'system' | 'serif' | 'mono',
+  fontSans:   'default' as 'default' | 'serif' | 'mono',
   textBase:   16,         // px
   motion:     'normal' as 'normal' | 'reduced' | 'none',
 };
 
-const FONT_STACKS: Record<string, string> = {
-  system: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  serif:  'Georgia, "Times New Roman", Times, serif',
-  mono:   'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+const FONT_STACKS: Record<string, { sans: string; display: string }> = {
+  default: {
+    sans:    '"Funnel Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    display: '"Funnel Display", ui-sans-serif, system-ui, sans-serif',
+  },
+  serif: {
+    sans:    'Georgia, "Times New Roman", Times, serif',
+    display: 'Georgia, "Times New Roman", Times, serif',
+  },
+  mono: {
+    sans:    'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+    display: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+  },
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -90,14 +99,18 @@ function applyRadius(base: number) {
   set('--radius-xl',   `${base + 10}px`);
 }
 
-function applyFont(key: 'system' | 'serif' | 'mono') {
-  set('--font-sans', FONT_STACKS[key] ?? FONT_STACKS['system']!);
+function applyFont(key: 'default' | 'serif' | 'mono') {
+  const stack = FONT_STACKS[key] ?? FONT_STACKS['default']!;
+  set('--font-sans',    stack.sans);
+  set('--font-display', stack.display);
 }
 
 function applyTextBase(px: number) {
   set('--text-base', `${px}px`);
-  set('--text-sm',   `${Math.round(px * 0.875)}px`);
   set('--text-lg',   `${Math.round(px * 1.125)}px`);
+  set('--text-xl',   `${Math.round(px * 1.25)}px`);
+  set('--text-2xl',  `${Math.round(px * 1.5)}px`);
+  set('--text-3xl',  `${Math.round(px * 2)}px`);
 }
 
 function applyMotion(mode: 'normal' | 'reduced' | 'none') {
@@ -121,8 +134,8 @@ function resetAll() {
     '--color-accent', '--color-accent-hover', '--color-accent-active',
     '--color-accent-subtle', '--color-border-focus', '--color-fg-on-accent',
     '--radius-sm', '--radius-md', '--radius-lg', '--radius-xl',
-    '--font-sans',
-    '--text-base', '--text-sm', '--text-lg',
+    '--font-sans', '--font-display',
+    '--text-base', '--text-lg', '--text-xl', '--text-2xl', '--text-3xl',
     '--duration-fast', '--duration-base', '--duration-slow',
   ].forEach(unset);
 }
@@ -133,7 +146,7 @@ export function Customizer() {
   const [open, setOpen] = useState(false);
   const [accent, setAccent] = useState(DEFAULTS.accentHex);
   const [radius, setRadius] = useState(DEFAULTS.radius);
-  const [font, setFont] = useState<'system' | 'serif' | 'mono'>(DEFAULTS.fontSans);
+  const [font, setFont] = useState<'default' | 'serif' | 'mono'>(DEFAULTS.fontSans);
   const [textBase, setTextBase] = useState(DEFAULTS.textBase);
   const [motion, setMotion] = useState(DEFAULTS.motion);
 
@@ -147,7 +160,7 @@ export function Customizer() {
     applyRadius(v);
   }, []);
 
-  const handleFont = useCallback((key: 'system' | 'serif' | 'mono') => {
+  const handleFont = useCallback((key: 'default' | 'serif' | 'mono') => {
     setFont(key);
     applyFont(key);
   }, []);
@@ -263,7 +276,7 @@ export function Customizer() {
                 Font family
               </label>
               <Row gap={1}>
-                {(['system', 'serif', 'mono'] as const).map(f => (
+                {(['default', 'serif', 'mono'] as const).map(f => (
                   <button
                     key={f}
                     onClick={() => handleFont(f)}
@@ -276,7 +289,7 @@ export function Customizer() {
                       background: font === f ? 'var(--color-accent)' : 'var(--color-bg)',
                       color: font === f ? 'var(--color-fg-on-accent)' : 'var(--color-fg)',
                       cursor: 'pointer',
-                      fontFamily: FONT_STACKS[f],
+                      fontFamily: FONT_STACKS[f]!.sans,
                       transition: 'background-color 120ms',
                     }}
                   >
@@ -292,7 +305,7 @@ export function Customizer() {
             <Col gap={2}>
               <Row align="center" justify="space-between">
                 <label htmlFor="text-slider" style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg-muted)' }}>
-                  Base font size
+                  Content text size
                 </label>
                 <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--color-fg-subtle)' }}>{textBase}px</span>
               </Row>
