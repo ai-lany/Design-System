@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/cn';
 import styles from './Checkbox.module.css';
 
@@ -27,14 +27,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   const inputId = id ?? generatedId;
   const innerRef = useRef<HTMLInputElement>(null);
 
-  // Forward both the external ref and our internal one
+  useImperativeHandle(ref, () => innerRef.current as HTMLInputElement);
+
   useEffect(() => {
     const el = innerRef.current;
-    if (!el) return;
-    el.indeterminate = indeterminate;
-    if (typeof ref === 'function') ref(el);
-    else if (ref) ref.current = el;
-  }, [indeterminate, ref]);
+    if (el) el.indeterminate = indeterminate;
+  }, [indeterminate]);
 
   return (
     <label

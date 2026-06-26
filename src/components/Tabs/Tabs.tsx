@@ -56,8 +56,7 @@ export const TabList = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>
     const listRef = useRef<HTMLDivElement>(null);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-      const list = listRef.current ?? ref as React.RefObject<HTMLDivElement> | null;
-      const el = (list as React.RefObject<HTMLDivElement> | null)?.current ?? listRef.current;
+      const el = listRef.current;
       if (!el) return;
       const tabs = Array.from(el.querySelectorAll<HTMLButtonElement>('[role="tab"]:not(:disabled)'));
       const idx = tabs.indexOf(document.activeElement as HTMLButtonElement);

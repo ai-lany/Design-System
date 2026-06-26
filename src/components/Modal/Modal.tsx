@@ -2,6 +2,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useId,
   useImperativeHandle,
   useRef,
   type HTMLAttributes,
@@ -43,6 +44,10 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
   const dialogRef = useRef<HTMLDialogElement>(null);
   useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement);
 
+  const baseId = useId();
+  const titleId = `${baseId}-title`;
+  const descriptionId = `${baseId}-description`;
+
   // Sync `open` prop with the native dialog's open state.
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -76,20 +81,20 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
       className={cn(styles.dialog, className)}
       onClose={handleClose}
       onClick={handleBackdropClick}
-      aria-labelledby={title ? 'modal-title' : undefined}
-      aria-describedby={description ? 'modal-description' : undefined}
+      aria-labelledby={title ? titleId : undefined}
+      aria-describedby={description ? descriptionId : undefined}
       {...rest}
     >
       <div className={styles.panel}>
         {(title || description) && (
           <header className={styles.header}>
             {title && (
-              <h2 id="modal-title" className={styles.title}>
+              <h2 id={titleId} className={styles.title}>
                 {title}
               </h2>
             )}
             {description && (
-              <p id="modal-description" className={styles.description}>
+              <p id={descriptionId} className={styles.description}>
                 {description}
               </p>
             )}

@@ -24,3 +24,4 @@ export * from './components/Tooltip';
 // Utilities
 export { cn } from './lib/cn';
 export type { ClassValue } from './lib/cn';
+export type { SpaceToken } from './lib/types';

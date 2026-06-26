@@ -1,8 +1,7 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/cn';
+import type { SpaceToken } from '../../lib/types';
 import styles from './Row.module.css';
-
-export type SpaceToken = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gap?: SpaceToken;

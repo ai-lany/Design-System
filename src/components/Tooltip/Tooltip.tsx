@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, useId, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/cn';
 import styles from './Tooltip.module.css';
 
@@ -15,15 +15,18 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
   { content, placement = 'top', className, children, ...rest },
   ref,
 ) {
+  const tooltipId = useId();
+
   return (
     <span
       ref={ref}
       className={cn(styles.wrapper, className)}
       data-placement={placement}
+      aria-describedby={tooltipId}
       {...rest}
     >
       {children}
-      <span className={styles.tooltip} role="tooltip">
+      <span id={tooltipId} className={styles.tooltip} role="tooltip">
         {content}
       </span>
     </span>

@@ -94,7 +94,10 @@
   color: var(--color-fg-on-accent);
 }
 .button[data-variant='danger']:hover:not(:disabled) {
-  filter: brightness(0.95);
+  background: var(--color-danger-hover);
+}
+.button[data-variant='danger']:active:not(:disabled) {
+  background: var(--color-danger-active);
 }
 
 /* ---------- Internal parts ---------- */

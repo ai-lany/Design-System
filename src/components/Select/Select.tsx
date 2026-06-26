@@ -72,7 +72,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   const labelId = `${baseId}-label`;
   const listboxId = `${baseId}-listbox`;
   const helperId = `${baseId}-helper`;
-  const optionId = (val: string) => `${baseId}-opt-${val.replace(/\s/g, '-')}`;
+  const optionId = (val: string) => `${baseId}-opt-${encodeURIComponent(val)}`;
 
   const isControlled = controlledValue !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue ?? '');

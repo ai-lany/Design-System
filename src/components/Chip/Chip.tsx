@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type MouseEvent } from 'react';
+import { forwardRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent } from 'react';
 import { cn } from '../../lib/cn';
 import styles from './Chip.module.css';
 
@@ -16,6 +16,15 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>(function Chip(
   { tone = 'neutral', selected = false, onRemove, className, children, onClick, ...rest },
   ref,
 ) {
+  const handleKeyDown = onClick
+    ? (e: KeyboardEvent<HTMLSpanElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick(e as unknown as MouseEvent<HTMLSpanElement>);
+        }
+      }
+    : undefined;
+
   return (
     <span
       ref={ref}
@@ -24,6 +33,7 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>(function Chip(
       data-interactive={onClick ? true : undefined}
       className={cn(styles.chip, className)}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       {...rest}
