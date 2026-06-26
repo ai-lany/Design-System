@@ -1,0 +1,147 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-fg);
+}
+
+.required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
+
+/* ── Default variant ──────────────────────────────────────────────── */
+
+.field {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.field:hover:not([data-disabled]):not([data-error]) {
+  border-color: var(--color-border-strong);
+}
+
+.field:focus-within {
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-focus);
+}
+
+.field[data-error] {
+  border-color: var(--color-danger);
+}
+
+.field[data-error]:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 25%, transparent);
+}
+
+.field[data-disabled] {
+  background: var(--color-bg-subtle);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--color-fg);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  line-height: var(--leading-normal);
+}
+
+.textarea::placeholder {
+  color: var(--color-fg-subtle);
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Code variant ─────────────────────────────────────────────────── */
+
+.codeWrapper {
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  max-height: 480px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.codeWrapper[data-error] {
+  border-color: var(--color-danger);
+}
+
+.codeWrapper:focus-within {
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-focus);
+}
+
+.codeInner {
+  position: relative;
+}
+
+.codePre {
+  margin: 0;
+  padding: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-loose);
+  color: var(--color-fg);
+  white-space: pre;
+  tab-size: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.codeTextarea {
+  position: absolute;
+  inset: 0;
+  padding: var(--space-5);
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--color-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-loose);
+  white-space: pre;
+  tab-size: 2;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.codeTextarea:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Helper ───────────────────────────────────────────────────────── */
+
+.helper {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-fg-muted);
+  line-height: var(--leading-normal);
+}
+
+.helper[data-error] {
+  color: var(--color-danger);
+}

@@ -106,6 +106,8 @@ function applyFont(key: 'default' | 'serif' | 'mono') {
 }
 
 function applyTextBase(px: number) {
+  set('--text-xs',   `${Math.round(px * 0.75)}px`);
+  set('--text-sm',   `${Math.round(px * 0.875)}px`);
   set('--text-base', `${px}px`);
   set('--text-lg',   `${Math.round(px * 1.125)}px`);
   set('--text-xl',   `${Math.round(px * 1.25)}px`);
@@ -135,7 +137,7 @@ function resetAll() {
     '--color-accent-subtle', '--color-border-focus', '--color-fg-on-accent',
     '--radius-sm', '--radius-md', '--radius-lg', '--radius-xl',
     '--font-sans', '--font-display',
-    '--text-base', '--text-lg', '--text-xl', '--text-2xl', '--text-3xl',
+    '--text-xs', '--text-sm', '--text-base', '--text-lg', '--text-xl', '--text-2xl', '--text-3xl',
     '--duration-fast', '--duration-base', '--duration-slow',
   ].forEach(unset);
 }

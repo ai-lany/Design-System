@@ -1,0 +1,19 @@
+.spinner {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border-style: solid;
+  border-right-color: transparent !important;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner[data-size='sm'] { width: 14px; height: 14px; border-width: 2px; }
+.spinner[data-size='md'] { width: 20px; height: 20px; border-width: 2.5px; }
+.spinner[data-size='lg'] { width: 28px; height: 28px; border-width: 3px; }
+
+.spinner[data-color='accent'] { border-color: var(--color-accent); }
+.spinner[data-color='current'] { border-color: currentColor; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
