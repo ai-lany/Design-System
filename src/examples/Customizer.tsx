@@ -258,7 +258,7 @@ export function Customizer() {
                 id="radius-slider"
                 type="range"
                 min={0}
-                max={20}
+                max={64}
                 step={1}
                 value={radius}
                 onChange={e => handleRadius(Number(e.target.value))}
@@ -315,7 +315,7 @@ export function Customizer() {
                 id="text-slider"
                 type="range"
                 min={13}
-                max={18}
+                max={24}
                 step={1}
                 value={textBase}
                 onChange={e => handleTextBase(Number(e.target.value))}

@@ -137,7 +137,10 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & HTMLAttributes<
           ref: anchorRef,
           onClick: (...args: unknown[]) => {
             setOpen(!open);
-            (trigger.props as Record<string, unknown>).onClick?.(...args);
+            const onClick = (trigger.props as Record<string, unknown>).onClick;
+            if (typeof onClick === 'function') {
+              onClick(...args);
+            }
           },
           'aria-expanded': open,
           'aria-haspopup': 'true',

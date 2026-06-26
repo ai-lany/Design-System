@@ -39,6 +39,8 @@ import {
   Timeline,
   ToastProvider,
   Tooltip,
+  Typography,
+  Link,
   useToast,
   type MenuItem,
 } from '../index';
@@ -91,14 +93,13 @@ const NAV_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Feedback', items: ['Alert', 'Toast', 'Spinner', 'Skeleton', 'Progress'] },
   { label: 'Data', items: ['Table', 'Stat', 'Timeline', 'EmptyState'] },
   { label: 'Display', items: ['Badge', 'Chip', 'Avatar', 'Card'] },
+  { label: 'Typography', items: ['Typography', 'Link'] },
 ];
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
     <section id={id} style={{ scrollMarginTop: '64px' }}>
-      <h2 style={{ margin: '0 0 var(--space-5)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--weight-semibold)', color: 'var(--color-fg)' }}>
-        {title}
-      </h2>
+      <Typography variant="h2" style={{ marginBottom: 'var(--space-5)' }}>{title}</Typography>
       <Col gap={6}>{children}</Col>
     </section>
   );
@@ -107,9 +108,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function Block({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <p style={{ margin: '0 0 var(--space-3)', fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-semibold)', color: 'var(--color-fg-subtle)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-        {label}
-      </p>
+      <Typography variant="h5" style={{ marginBottom: 'var(--space-3)' }}>{label}</Typography>
       {children}
     </div>
   );
@@ -139,9 +138,7 @@ export function Example() {
           padding: '0 var(--space-5)',
           gap: 'var(--space-4)',
         }}>
-          <span style={{ fontWeight: 'var(--weight-semibold)', fontSize: 'var(--text-base)', color: 'var(--color-fg)' }}>
-            Design System
-          </span>
+          <Typography variant="label" as="span">Design System</Typography>
           <Badge tone="accent" variant="soft">v0.1</Badge>
           <span style={{ flex: 1 }} />
           <Button variant="ghost" size="sm" onClick={toggleDark} aria-label="Toggle dark mode">
@@ -161,19 +158,12 @@ export function Example() {
             <Col gap={4}>
               {NAV_GROUPS.map((group) => (
                 <div key={group.label}>
-                  <p style={{ margin: '0 0 var(--space-1) var(--space-3)', fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-semibold)', color: 'var(--color-fg-subtle)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    {group.label}
-                  </p>
-                  <Col gap={0}>
+                  <Typography variant="h5" style={{ margin: '0 0 var(--space-1) var(--space-3)' }}>{group.label}</Typography>
+                  <Col>
                     {group.items.map((name) => {
                       const id = name.toLowerCase().replace(/\s+/g, '-').replace('&', '').replace('--', '-');
                       return (
-                        <a key={name} href={`#${id}`} style={{ display: 'block', padding: 'var(--space-2) var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', borderRadius: 'var(--radius-md)', textDecoration: 'none', transition: 'background-color 120ms, color 120ms' }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--color-bg-muted)'; (e.currentTarget as HTMLElement).style.color = 'var(--color-fg)'; }}
-                          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = ''; (e.currentTarget as HTMLElement).style.color = ''; }}
-                        >
-                          {name}
-                        </a>
+                        <Link key={name} variant="nav" href={`#${id}`}>{name}</Link>
                       );
                     })}
                   </Col>
@@ -188,9 +178,9 @@ export function Example() {
 
               {/* ── BUTTON ── */}
               <Section id="button" title="Button">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Primary interactive element for triggering actions. Comes in four semantic variants (<code>primary</code>, <code>secondary</code>, <code>ghost</code>, <code>danger</code>), three sizes, and supports loading states, disabled states, and leading/trailing icon slots.
-                </p>
+                </Typography>
                 <Block label="Variants">
                   <PreviewCode
                     preview={
@@ -250,9 +240,9 @@ export function Example() {
 
               {/* ── INPUT ── */}
               <Section id="input" title="Input">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Single-line text field with a built-in label, helper text, error state, and optional leading/trailing icon slots. Use <code>inputSize</code> instead of the native <code>size</code> attribute to control height.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -316,9 +306,9 @@ export function Example() {
 
               {/* ── SELECT ── */}
               <Section id="select" title="Select">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Custom dropdown for choosing one option from a predefined list. Portal-rendered for consistent cross-browser appearance. Accepts the same <code>label</code>, <code>helperText</code>, and <code>error</code> props as <code>Input</code>. For long or searchable lists, prefer <code>Combobox</code>.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -339,7 +329,7 @@ export function Example() {
                           placeholder="Select a role…"
                           required
                           options={[
-                            { value: 'admin',  label: 'Admin' },
+                            { value: 'admin', label: 'Admin' },
                             { value: 'editor', label: 'Editor' },
                             { value: 'viewer', label: 'Viewer' },
                             { value: 'locked', label: 'Locked role', disabled: true },
@@ -409,9 +399,9 @@ const [role, setRole] = useState('');
 
               {/* ── CHECKBOX ── */}
               <Section id="checkbox" title="Checkbox">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Binary toggle for boolean values. Supports an <code>indeterminate</code> state — useful for "select all" patterns where some but not all child items are checked.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -457,9 +447,9 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
 
               {/* ── SWITCH ── */}
               <Section id="switch" title="Switch">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Toggle that communicates an on/off state. Prefer it over <code>Checkbox</code> when the change takes effect immediately without a submit action — for example, enabling dark mode or a notification setting.
-                </p>
+                </Typography>
                 <Block label="Sizes & label position">
                   <PreviewCode
                     preview={
@@ -521,17 +511,17 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
 
               {/* ── CARD ── */}
               <Section id="card" title="Card">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   General-purpose surface container with three elevation levels. Use the <code>CardHeader</code>, <code>CardBody</code>, and <code>CardFooter</code> subcomponents to structure content — they remove the Card's own padding so each region owns its own spacing.
-                </p>
+                </Typography>
                 <Block label="Elevations">
                   <PreviewCode
                     preview={
                       <Row gap={4} wrap align="stretch">
                         {(['flat', 'raised', 'floating'] as const).map(e => (
                           <Card key={e} elevation={e} style={{ flex: '1 1 160px' }}>
-                            <p style={{ margin: 0, fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)' }}>{e.charAt(0).toUpperCase() + e.slice(1)}</p>
-                            <p style={{ margin: 'var(--space-1) 0 0', fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>elevation="{e}"</p>
+                            <Typography variant="body2" weight="medium">{e.charAt(0).toUpperCase() + e.slice(1)}</Typography>
+                            <Typography variant="caption" color="muted" style={{ marginTop: 'var(--space-1)' }}>elevation="{e}"</Typography>
                           </Card>
                         ))}
                       </Row>
@@ -545,9 +535,9 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                   <PreviewCode
                     preview={
                       <Card style={{ maxWidth: 340 }}>
-                        <CardHeader><strong>Account settings</strong></CardHeader>
+                        <CardHeader><Typography variant="label">Account settings</Typography></CardHeader>
                         <CardBody>
-                          <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>Update your email and notification preferences.</p>
+                          <Typography variant="body2" color="muted">Update your email and notification preferences.</Typography>
                         </CardBody>
                         <CardFooter>
                           <Button variant="ghost" size="sm">Cancel</Button>
@@ -571,8 +561,8 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                   <PreviewCode
                     preview={
                       <Card interactive style={{ maxWidth: 280 }}>
-                        <p style={{ margin: 0, fontWeight: 'var(--weight-medium)' }}>Clickable card</p>
-                        <p style={{ margin: 'var(--space-1) 0 0', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>Hover to see the lift effect.</p>
+                        <Typography variant="body2" weight="medium">Clickable card</Typography>
+                        <Typography variant="body2" color="muted" style={{ marginTop: 'var(--space-1)' }}>Hover to see the lift effect.</Typography>
                       </Card>
                     }
                     code={`<Card interactive onClick={() => router.push('/detail')}>
@@ -586,9 +576,9 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
 
               {/* ── MODAL ── */}
               <Section id="modal" title="Modal">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Focused dialog that overlays the page and traps keyboard focus until dismissed. Portal-rendered with a backdrop. Supports three widths and an optional <code>footer</code> slot for confirmation actions.
-                </p>
+                </Typography>
                 <Block label="Sizes">
                   <PreviewCode
                     preview={
@@ -623,16 +613,16 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
 
               {/* ── BADGE ── */}
               <Section id="badge" title="Badge">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Compact inline label for status, counts, or categories. Combines five tones (<code>neutral</code>, <code>accent</code>, <code>success</code>, <code>warning</code>, <code>danger</code>) with three surface variants (<code>soft</code>, <code>solid</code>, <code>outline</code>).
-                </p>
+                </Typography>
                 <Block label="Variants × tones">
                   <PreviewCode
                     preview={
                       <Col gap={4}>
                         {(['soft', 'solid', 'outline'] as const).map(v => (
                           <Row key={v} gap={2} wrap align="center">
-                            <span style={{ width: 52, fontSize: 'var(--text-xs)', color: 'var(--color-fg-subtle)' }}>{v}</span>
+                            <Typography variant="caption" color="subtle" as="span" style={{ width: 52 }}>{v}</Typography>
                             {(['neutral', 'accent', 'success', 'warning', 'danger'] as const).map(t => (
                               <Badge key={t} tone={t} variant={v}>{t}</Badge>
                             ))}
@@ -666,9 +656,9 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
 
               {/* ── CHIP ── */}
               <Section id="chip" title="Chip">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Compact interactive tag. Can be toggled and selected for filter UIs, or made removable for tag-input patterns. Shares the same tone options as <code>Badge</code>.
-                </p>
+                </Typography>
                 <Block label="Interactive toggle">
                   <PreviewCode
                     preview={<ChipToggleExample />}
@@ -714,9 +704,9 @@ const toggle = (tag: string) =>
 
               {/* ── AVATAR ── */}
               <Section id="avatar" title="Avatar">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Displays a user's photo with an automatic initials fallback when the image is absent or fails to load. Supports four sizes and four status dot states (<code>online</code>, <code>busy</code>, <code>away</code>, <code>offline</code>).
-                </p>
+                </Typography>
                 <Block label="Sizes & initials fallback">
                   <PreviewCode
                     preview={
@@ -740,7 +730,7 @@ const toggle = (tag: string) =>
                         {(['online', 'busy', 'away', 'offline'] as const).map(s => (
                           <Col key={s} gap={1} align="center">
                             <Avatar name="User" size="lg" status={s} />
-                            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>{s}</span>
+                            <Typography variant="caption" color="muted" as="span">{s}</Typography>
                           </Col>
                         ))}
                       </Row>
@@ -775,9 +765,9 @@ const toggle = (tag: string) =>
 
               {/* ── TABS ── */}
               <Section id="tabs" title="Tabs">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Organizes related content into labelled panels, showing one at a time. Fully controlled — manage the active tab with <code>value</code> and <code>onChange</code>. Individual tabs can be disabled.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={<TabsExample />}
@@ -831,9 +821,9 @@ const toggle = (tag: string) =>
 
               {/* ── TOOLTIP ── */}
               <Section id="tooltip" title="Tooltip">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Short contextual hint that appears on hover or focus. Works on any element. Supports four placements. Keep content brief and non-interactive — for richer floating content use <code>Popover</code>.
-                </p>
+                </Typography>
                 <Block label="Placements">
                   <PreviewCode
                     preview={
@@ -888,9 +878,9 @@ const toggle = (tag: string) =>
 
               {/* ── DIVIDER ── */}
               <Section id="divider" title="Divider">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Horizontal or vertical rule for visually separating sections. The horizontal variant optionally accepts a centered <code>label</code> — useful for "or" dividers in login forms.
-                </p>
+                </Typography>
                 <Block label="Horizontal">
                   <PreviewCode
                     preview={
@@ -912,11 +902,11 @@ const toggle = (tag: string) =>
                   <PreviewCode
                     preview={
                       <Row gap={4} align="center" style={{ height: 40 }}>
-                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>Item A</span>
+                        <Typography variant="body2" color="muted" as="span">Item A</Typography>
                         <Divider orientation="vertical" />
-                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>Item B</span>
+                        <Typography variant="body2" color="muted" as="span">Item B</Typography>
                         <Divider orientation="vertical" />
-                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>Item C</span>
+                        <Typography variant="body2" color="muted" as="span">Item C</Typography>
                       </Row>
                     }
                     code={`<Row align="center" style={{ height: 40 }}>
@@ -934,9 +924,9 @@ const toggle = (tag: string) =>
 
               {/* ── CONTAINER ── */}
               <Section id="container" title="Container">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Constrains content to a max-width and centers it horizontally with auto margins. Use it at the page level to maintain consistent, readable line lengths across viewport sizes.
-                </p>
+                </Typography>
                 <Block label="Max-width presets">
                   <PreviewCode
                     preview={
@@ -944,7 +934,7 @@ const toggle = (tag: string) =>
                         {(['sm', 'md', 'lg', 'xl'] as const).map(s => (
                           <Container key={s} maxWidth={s} center style={{ background: 'var(--color-bg-muted)', borderRadius: 'var(--radius-md)', padding: 'var(--space-3)', border: '1px dashed var(--color-border)' }}>
                             <Row justify="space-between" align="center">
-                              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>maxWidth="{s}"</span>
+                              <Typography variant="caption" color="muted" as="span">maxWidth="{s}"</Typography>
                               <Badge variant="outline" tone="neutral">{s === 'sm' ? '640px' : s === 'md' ? '768px' : s === 'lg' ? '1024px' : '1280px'}</Badge>
                             </Row>
                           </Container>
@@ -968,9 +958,9 @@ const toggle = (tag: string) =>
 
               {/* ── ROW & COL ── */}
               <Section id="row-col" title="Row & Col">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Thin flexbox layout primitives. <code>Row</code> lays children out horizontally; <code>Col</code> vertically. Both accept <code>gap</code> (space tokens 1–8), <code>align</code>, and <code>justify</code> — eliminating repetitive flex boilerplate.
-                </p>
+                </Typography>
                 <Block label="Row — gap, align, justify">
                   <PreviewCode
                     preview={
@@ -981,7 +971,7 @@ const toggle = (tag: string) =>
                         ].map(m => (
                           <Row key={m.name} gap={3} align="center" justify="space-between" style={{ background: 'var(--color-bg-muted)', padding: 'var(--space-3)', borderRadius: 'var(--radius-md)' }}>
                             <Avatar name={m.name} size="sm" />
-                            <span style={{ fontSize: 'var(--text-sm)', flex: 1 }}>{m.name}</span>
+                            <Typography variant="body2" as="span" style={{ flex: 1 }}>{m.name}</Typography>
                             <Badge tone={m.tone}>{m.status}</Badge>
                             <Button variant="ghost" size="sm">Edit</Button>
                           </Row>
@@ -1002,9 +992,9 @@ const toggle = (tag: string) =>
 
               {/* ── TEXTAREA ── */}
               <Section id="textarea" title="Textarea">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Multi-line text input with four resize modes and the same label/helper/error system as <code>Input</code>. The <code>code</code> variant renders a read-only syntax-highlighted block — used by this page for all code examples.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -1069,9 +1059,9 @@ export function App() {
 
               {/* ── COMBOBOX ── */}
               <Section id="combobox" title="Combobox">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Filterable select that lets users type to narrow down a long list of options. Keyboard navigable (arrow keys, Enter, Escape). Accepts a custom <code>filterFn</code> for server-side or fuzzy filtering.
-                </p>
+                </Typography>
                 <Block label="Filterable select">
                   <PreviewCode
                     preview={
@@ -1080,12 +1070,12 @@ export function App() {
                           label="Framework"
                           placeholder="Search frameworks…"
                           options={[
-                            { value: 'react',   label: 'React' },
-                            { value: 'vue',     label: 'Vue' },
-                            { value: 'svelte',  label: 'Svelte' },
-                            { value: 'solid',   label: 'SolidJS' },
+                            { value: 'react', label: 'React' },
+                            { value: 'vue', label: 'Vue' },
+                            { value: 'svelte', label: 'Svelte' },
+                            { value: 'solid', label: 'SolidJS' },
                             { value: 'angular', label: 'Angular' },
-                            { value: 'qwik',    label: 'Qwik' },
+                            { value: 'qwik', label: 'Qwik' },
                           ]}
                           helperText="Type to filter options."
                         />
@@ -1110,9 +1100,9 @@ export function App() {
 
               {/* ── DATEPICKER ── */}
               <Section id="datepicker" title="DatePicker">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Calendar popover for selecting a single date. Portal-rendered to avoid clipping inside overflow containers. Accepts <code>min</code> and <code>max</code> props to constrain the selectable range, and works in both controlled and uncontrolled modes.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -1159,9 +1149,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── SLIDER ── */}
               <Section id="slider" title="Slider">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Range input for choosing a numeric value. The default <code>filled</code> variant colors the track to the left of the thumb; the <code>plain</code> variant shows a uniform track. Accepts a <code>formatValue</code> function for custom display (e.g., currency, percentage).
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -1220,9 +1210,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── RADIO ── */}
               <Section id="radio" title="Radio">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Single-select choice among a fixed, visible set of options. Wrap individual <code>Radio</code> elements in a <code>RadioGroup</code> to share state, name, and orientation. For more than ~5 options, prefer <code>Select</code> or <code>Combobox</code>.
-                </p>
+                </Typography>
                 <Block label="Vertical group">
                   <PreviewCode
                     preview={<RadioGroupExample />}
@@ -1262,11 +1252,11 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── FORMFIELD ── */}
               <Section id="formfield" title="FormField">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   A layout wrapper that adds a label, helper text, and error state around <em>any</em> control.
                   Use it when the built-in components (<code>Input</code>, <code>Select</code>, <code>Textarea</code>, etc.) don't fit — for example, a native <code>&lt;select&gt;</code>, a third-party date picker, or a custom composite control.
                   Children can read the generated field id and error state via the <code>useFormField()</code> hook.
-                </p>
+                </Typography>
                 <Block label="Wrapping any input">
                   <PreviewCode
                     preview={<FormFieldExample />}
@@ -1295,9 +1285,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── DRAWER ── */}
               <Section id="drawer" title="Drawer">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Slide-in panel from the left or right edge of the viewport. Portal-rendered with a backdrop. Accepts a sticky <code>footer</code> slot for action buttons and a <code>dismissOnBackdrop</code> flag to control whether clicking outside closes it.
-                </p>
+                </Typography>
                 <Block label="Sides & sizes">
                   <PreviewCode
                     preview={<DrawerExample />}
@@ -1332,9 +1322,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── POPOVER ── */}
               <Section id="popover" title="Popover">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Floating content panel anchored to a trigger element. Unlike <code>Tooltip</code>, the content can be interactive (forms, pickers, rich text). Supports eight placements and both controlled and uncontrolled open state.
-                </p>
+                </Typography>
                 <Block label="Placements">
                   <PreviewCode
                     preview={
@@ -1344,13 +1334,7 @@ const [date, setDate] = useState<Date | null>(null);
                             key={p}
                             placement={p}
                             trigger={<Button variant="secondary" size="sm">{p}</Button>}
-                            content={
-                              <div style={{ padding: 'var(--space-3)', maxWidth: 200 }}>
-                                <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-fg)' }}>
-                                  Popover content placed <strong>{p}</strong>.
-                                </p>
-                              </div>
-                            }
+                            content={`Popover content placed ${p}.`}
                           />
                         ))}
                       </Row>
@@ -1372,9 +1356,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── MENU ── */}
               <Section id="menu" title="Menu">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Dropdown list of actions anchored to a trigger. Supports icons, keyboard shortcuts, section labels, separators, and danger items. Keyboard navigable (arrow keys, Enter, Escape).
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={<MenuExample />}
@@ -1418,9 +1402,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── CONTEXTMENU ── */}
               <Section id="contextmenu" title="ContextMenu">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Right-click menu that appears at the cursor position. Wraps any element as the trigger area. Shares the same <code>MenuItem</code> type as <code>Menu</code>, so items are fully interchangeable.
-                </p>
+                </Typography>
                 <Block label="Right-click trigger">
                   <PreviewCode
                     preview={<ContextMenuExample />}
@@ -1446,9 +1430,9 @@ const [date, setDate] = useState<Date | null>(null);
 
               {/* ── TOAST ── */}
               <Section id="toast" title="Toast">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Transient notification that auto-dismisses after a configurable duration. Requires <code>&lt;ToastProvider&gt;</code> once at the app root. Dispatch toasts from anywhere in the tree via <code>useToast()</code>. Set <code>duration: 0</code> for a persistent toast.
-                </p>
+                </Typography>
                 <Block label="Tones">
                   <PreviewCode
                     preview={<ToastExample />}
@@ -1475,17 +1459,17 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── ALERT ── */}
               <Section id="alert" title="Alert">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Persistent inline message for communicating status or feedback within the page. Unlike <code>Toast</code>, it stays in the document flow and is always visible. Provide <code>onClose</code> to make it dismissible.
-                </p>
+                </Typography>
                 <Block label="Tones">
                   <PreviewCode
                     preview={
                       <Col gap={3}>
-                        <Alert tone="info"    title="Info"    >Your session will expire in 5 minutes.</Alert>
+                        <Alert tone="info" title="Info"    >Your session will expire in 5 minutes.</Alert>
                         <Alert tone="success" title="Success" >Profile updated successfully.</Alert>
                         <Alert tone="warning" title="Warning" >Two-factor authentication is not enabled.</Alert>
-                        <Alert tone="danger"  title="Error"   >Failed to save changes. Please try again.</Alert>
+                        <Alert tone="danger" title="Error"   >Failed to save changes. Please try again.</Alert>
                       </Col>
                     }
                     code={`// tone: info | success | warning | danger
@@ -1517,9 +1501,9 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── SPINNER ── */}
               <Section id="spinner" title="Spinner">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Animated loading indicator for signalling async work in progress. Use <code>color="current"</code> to inherit the parent's color, making it suitable for placement inside buttons and other tinted containers.
-                </p>
+                </Typography>
                 <Block label="Sizes">
                   <PreviewCode
                     preview={
@@ -1527,7 +1511,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                         {(['sm', 'md', 'lg'] as const).map(s => (
                           <Col key={s} gap={2} align="center">
                             <Spinner size={s} />
-                            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>{s}</span>
+                            <Typography variant="caption" color="muted" as="span">{s}</Typography>
                           </Col>
                         ))}
                       </Row>
@@ -1561,9 +1545,9 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── SKELETON ── */}
               <Section id="skeleton" title="Skeleton">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Placeholder content shown while real data is loading. Three variants — <code>text</code>, <code>circle</code>, and <code>rect</code> — cover most layouts. Combine them to mirror the shape of the content that will appear.
-                </p>
+                </Typography>
                 <Block label="Variants">
                   <PreviewCode
                     preview={
@@ -1615,16 +1599,16 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── PROGRESS ── */}
               <Section id="progress" title="Progress">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Visualizes a completion percentage. The <code>bar</code> variant suits linear workflows (file uploads, multi-step forms); the <code>circular</code> variant suits compact metric displays in dashboards and stat cards.
-                </p>
+                </Typography>
                 <Block label="Bar">
                   <PreviewCode
                     preview={
                       <Col gap={4} style={{ maxWidth: 400 }}>
                         <Progress value={72} label="Storage" showValue />
                         <Progress value={45} tone="warning" label="CPU" showValue />
-                        <Progress value={90} tone="danger"  label="Memory" showValue />
+                        <Progress value={90} tone="danger" label="Memory" showValue />
                         <Progress value={100} tone="success" label="Upload complete" showValue />
                       </Col>
                     }
@@ -1639,10 +1623,10 @@ toast({ title: 'Background task running…', duration: 0 });`}
                   <PreviewCode
                     preview={
                       <Row gap={6} wrap>
-                        <Progress variant="circular" value={68} tone="accent"  size="md" showValue label="Overall" />
+                        <Progress variant="circular" value={68} tone="accent" size="md" showValue label="Overall" />
                         <Progress variant="circular" value={92} tone="success" size="md" showValue label="Tests" />
                         <Progress variant="circular" value={34} tone="warning" size="md" showValue label="Coverage" />
-                        <Progress variant="circular" value={12} tone="danger"  size="md" showValue label="Budget" />
+                        <Progress variant="circular" value={12} tone="danger" size="md" showValue label="Budget" />
                       </Row>
                     }
                     code={`<Progress variant="circular" value={68} tone="accent"  showValue label="Overall" />
@@ -1657,17 +1641,17 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── STAT ── */}
               <Section id="stat" title="Stat">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Displays a key metric alongside an optional change indicator. The <code>trend</code> prop (<code>up</code>, <code>down</code>, <code>neutral</code>) controls the arrow icon and color — note that "down" is not always negative depending on the metric.
-                </p>
+                </Typography>
                 <Block label="Trend indicators">
                   <PreviewCode
                     preview={
                       <Row gap={4} wrap>
-                        <Stat label="Revenue"       value="$48,295" change="+12.5%" trend="up"      description="vs last month" />
-                        <Stat label="Active users"  value="3,842"   change="-2.1%"  trend="down"    description="vs last week" />
-                        <Stat label="Uptime"        value="99.97%"  change="0.0%"   trend="neutral" description="last 30 days" />
-                        <Stat label="Open tickets"  value="17"      change="+4"     trend="down"    description="needs attention" />
+                        <Stat label="Revenue" value="$48,295" change="+12.5%" trend="up" description="vs last month" />
+                        <Stat label="Active users" value="3,842" change="-2.1%" trend="down" description="vs last week" />
+                        <Stat label="Uptime" value="99.97%" change="0.0%" trend="neutral" description="last 30 days" />
+                        <Stat label="Open tickets" value="17" change="+4" trend="down" description="needs attention" />
                       </Row>
                     }
                     code={`// trend: 'up' | 'down' | 'neutral'
@@ -1694,19 +1678,19 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── TIMELINE ── */}
               <Section id="timeline" title="Timeline">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Vertical sequence of events or steps. Each item has a <code>label</code>, optional <code>description</code>, optional <code>time</code> stamp, an optional custom <code>icon</code>, and a <code>tone</code> for the dot color.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
                       <Timeline
                         items={[
-                          { label: 'Order placed',    description: 'Your order #8421 was confirmed.',       time: '9:00 AM',  tone: 'success' },
-                          { label: 'Payment received', description: 'Payment of $249 processed.',            time: '9:05 AM',  tone: 'success' },
-                          { label: 'Processing',       description: 'Items are being prepared for shipping.', time: '10:30 AM', tone: 'accent'  },
-                          { label: 'Shipped',          description: 'Package handed to carrier.',             time: 'Pending',  tone: 'neutral' },
-                          { label: 'Delivered',        description: 'Expected by Friday.',                    time: 'Pending',  tone: 'neutral' },
+                          { label: 'Order placed', description: 'Your order #8421 was confirmed.', time: '9:00 AM', tone: 'success' },
+                          { label: 'Payment received', description: 'Payment of $249 processed.', time: '9:05 AM', tone: 'success' },
+                          { label: 'Processing', description: 'Items are being prepared for shipping.', time: '10:30 AM', tone: 'accent' },
+                          { label: 'Shipped', description: 'Package handed to carrier.', time: 'Pending', tone: 'neutral' },
+                          { label: 'Delivered', description: 'Expected by Friday.', time: 'Pending', tone: 'neutral' },
                         ]}
                       />
                     }
@@ -1740,9 +1724,9 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── EMPTYSTATE ── */}
               <Section id="emptystate" title="EmptyState">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Placeholder for views with no content — empty inboxes, zero search results, first-time user screens. Accepts an <code>icon</code>, <code>title</code>, <code>description</code>, and an <code>action</code> slot for a primary call to action.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -1773,9 +1757,9 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── TABLE ── */}
               <Section id="table" title="Table">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Semantic HTML table primitives (<code>Table</code>, <code>TableHead</code>, <code>TableBody</code>, <code>TableRow</code>, <code>Th</code>, <code>Td</code>) for full manual control, plus a <code>DataTable</code> component for data-driven tables with built-in column sorting and row selection.
-                </p>
+                </Typography>
                 <Block label="Primitives">
                   <PreviewCode
                     preview={<TablePrimitivesExample />}
@@ -1824,9 +1808,9 @@ toast({ title: 'Background task running…', duration: 0 });`}
 
               {/* ── BREADCRUMB ── */}
               <Section id="breadcrumb" title="Breadcrumb">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Navigation trail showing the user's location within the site hierarchy. The last item represents the current page — rendered as plain text with <code>aria-current="page"</code>. Accepts a custom <code>separator</code>.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={
@@ -1868,10 +1852,219 @@ toast({ title: 'Background task running…', duration: 0 });`}
               <Divider />
 
               {/* ── PAGINATION ── */}
+              {/* ── TYPOGRAPHY ── */}
+              <Section id="typography" title="Typography">
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
+                  Renders semantic text at any scale. The <code>variant</code> prop controls visual style while <code>as</code> overrides the HTML tag when needed. Supports color, alignment, weight, gutterBottom, and noWrap modifiers.
+                </Typography>
+                <Block label="Headings">
+                  <PreviewCode
+                    preview={
+                      <Col gap={2}>
+                        {(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map(v => (
+                          <Typography key={v} variant={v}>{v.toUpperCase()} — The quick brown fox</Typography>
+                        ))}
+                      </Col>
+                    }
+                    code={`<Typography variant="h1">H1 — The quick brown fox</Typography>
+<Typography variant="h2">H2 — The quick brown fox</Typography>
+<Typography variant="h3">H3 — The quick brown fox</Typography>
+<Typography variant="h4">H4 — The quick brown fox</Typography>
+<Typography variant="h5">H5 — The quick brown fox</Typography>
+<Typography variant="h6">H6 — The quick brown fox</Typography>`}
+                  />
+                </Block>
+                <Block label="Subtitles">
+                  <PreviewCode
+                    preview={
+                      <Col gap={2}>
+                        <Typography variant="subtitle1">Subtitle 1 — Section introduction text</Typography>
+                        <Typography variant="subtitle2">Subtitle 2 — Supporting descriptive copy</Typography>
+                      </Col>
+                    }
+                    code={`<Typography variant="subtitle1">Subtitle 1 — Section introduction text</Typography>
+<Typography variant="subtitle2">Subtitle 2 — Supporting descriptive copy</Typography>`}
+                  />
+                </Block>
+                <Block label="Body">
+                  <PreviewCode
+                    preview={
+                      <Col gap={3}>
+                        <Typography variant="body1">Body 1 — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Typography>
+                        <Typography variant="body2">Body 2 — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Typography>
+                      </Col>
+                    }
+                    code={`<Typography variant="body1">
+  Body 1 — default paragraph text at 16px.
+</Typography>
+
+<Typography variant="body2">
+  Body 2 — secondary paragraph text at 14px.
+</Typography>`}
+                  />
+                </Block>
+                <Block label="Caption, Overline & Label">
+                  <PreviewCode
+                    preview={
+                      <Col gap={3}>
+                        <Typography variant="overline">Overline — category label</Typography>
+                        <Typography variant="label">Label — form field or UI label</Typography>
+                        <Typography variant="caption">Caption — supplementary metadata or timestamps</Typography>
+                      </Col>
+                    }
+                    code={`// Rendered as <span> by default
+<Typography variant="overline">Overline — category label</Typography>
+<Typography variant="label">Label — form field or UI label</Typography>
+<Typography variant="caption">Caption — supplementary metadata</Typography>`}
+                  />
+                </Block>
+                <Block label="Colors">
+                  <PreviewCode
+                    preview={
+                      <Col gap={2}>
+                        {(['default', 'muted', 'subtle', 'accent', 'danger', 'success', 'warning'] as const).map(c => (
+                          <Typography key={c} variant="body2" color={c}>
+                            color="{c}" — The quick brown fox jumps over the lazy dog.
+                          </Typography>
+                        ))}
+                      </Col>
+                    }
+                    code={`<Typography color="default">Default</Typography>
+<Typography color="muted">Muted</Typography>
+<Typography color="subtle">Subtle</Typography>
+<Typography color="accent">Accent</Typography>
+<Typography color="danger">Danger</Typography>
+<Typography color="success">Success</Typography>
+<Typography color="warning">Warning</Typography>`}
+                  />
+                </Block>
+                <Block label="Utilities">
+                  <PreviewCode
+                    preview={
+                      <Col gap={4} style={{ maxWidth: 360 }}>
+                        <Typography variant="body1" gutterBottom>With gutterBottom — adds 0.5em margin below.</Typography>
+                        <Typography variant="body1" noWrap>noWrap — this text is clipped with an ellipsis and will not wrap to the next line no matter how long it gets.</Typography>
+                        <Typography variant="h4" align="center">Centered heading</Typography>
+                        <Typography variant="body2" weight="semibold">weight="semibold" override on body2</Typography>
+                        <Typography variant="h3" as="p">h3 variant rendered as a &lt;p&gt; tag</Typography>
+                      </Col>
+                    }
+                    code={`// gutterBottom adds 0.5em margin-bottom
+<Typography gutterBottom>Paragraph with gutter.</Typography>
+
+// noWrap clips overflow text with ellipsis
+<Typography noWrap>Very long text that would normally wrap...</Typography>
+
+// align overrides text-align
+<Typography align="center">Centered</Typography>
+
+// weight overrides font-weight independent of variant
+<Typography variant="body2" weight="semibold">Bold body text</Typography>
+
+// as prop changes the HTML tag while keeping variant styles
+<Typography variant="h3" as="p">Styled h3, rendered as p</Typography>`}
+                  />
+                </Block>
+              </Section>
+
+              <Divider />
+
+              {/* ── LINK ── */}
+              <Section id="link" title="Link">
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
+                  Anchor element with two variants: <code>inline</code> for text links within prose, and <code>nav</code> for block navigation items with a hover background. Supports an <code>as</code> prop to swap in any router link without losing styles.
+                </Typography>
+                <Block label="Inline — underline modes">
+                  <PreviewCode
+                    preview={
+                      <Col gap={3}>
+                        <Typography variant="body2">underline=<code>"hover"</code> (default) — <Link href="#">Visit the documentation</Link> for more details.</Typography>
+                        <Typography variant="body2">underline=<code>"always"</code> — <Link href="#" underline="always">Always underlined link</Link> in body text.</Typography>
+                        <Typography variant="body2">underline=<code>"none"</code> — <Link href="#" underline="none">No underline ever</Link> useful in tight UI.</Typography>
+                      </Col>
+                    }
+                    code={`// default: underline appears on hover
+<Link href="/docs">Visit the documentation</Link>
+
+// always underlined
+<Link href="/docs" underline="always">Always underlined</Link>
+
+// never underlined
+<Link href="/docs" underline="none">No underline</Link>`}
+                  />
+                </Block>
+                <Block label="Colors">
+                  <PreviewCode
+                    preview={
+                      <Col gap={2}>
+                        {(['accent', 'default', 'muted', 'subtle', 'danger', 'success', 'warning'] as const).map(c => (
+                          <Typography key={c} variant="body2">
+                            <Link href="#" color={c} underline="always">color="{c}"</Link> — The quick brown fox jumps over the lazy dog.
+                          </Typography>
+                        ))}
+                      </Col>
+                    }
+                    code={`<Link href="#" color="accent">Accent (default)</Link>
+<Link href="#" color="muted">Muted</Link>
+<Link href="#" color="danger">Danger</Link>
+<Link href="#" color="success">Success</Link>`}
+                  />
+                </Block>
+                <Block label="Nav variant">
+                  <PreviewCode
+                    preview={
+                      <div style={{ width: 180, border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-3)', background: 'var(--color-bg-subtle)' }}>
+                        <Col gap={1}>
+                          {['Overview', 'Components', 'Tokens', 'Changelog'].map(item => (
+                            <Link key={item} variant="nav" href="#">{item}</Link>
+                          ))}
+                        </Col>
+                      </div>
+                    }
+                    code={`// variant="nav" — block item with hover background
+// color defaults to "muted", hover changes to fg
+// aria-current="page" highlights the active item
+
+{navItems.map(item => (
+  <Link
+    key={item.href}
+    variant="nav"
+    href={item.href}
+    aria-current={isActive(item.href) ? 'page' : undefined}
+  >
+    {item.label}
+  </Link>
+))}`}
+                  />
+                </Block>
+                <Block label="Polymorphic — as prop">
+                  <PreviewCode
+                    preview={
+                      <Col gap={3}>
+                        <Typography variant="body2"><Link href="#" underline="hover">Default — renders as &lt;a&gt;</Link></Typography>
+                        <Typography variant="body2"><Link as="button" onClick={() => {}} underline="always" color="accent" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>as="button" — same styles, no href needed</Link></Typography>
+                      </Col>
+                    }
+                    code={`// Default <a>
+<Link href="/about">About us</Link>
+
+// React Router / Next.js — pass their Link as \`as\`
+import { Link as RouterLink } from 'react-router-dom';
+
+<Link as={RouterLink} to="/about">About us</Link>
+
+// Button element (no href)
+<Link as="button" onClick={handleClick}>Trigger action</Link>`}
+                  />
+                </Block>
+              </Section>
+
+              <Divider />
+
               <Section id="pagination" title="Pagination">
-                <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Controls for navigating between pages of a data set. Automatically collapses middle pages into an ellipsis when the page count is large. Fully controlled via <code>page</code> and <code>onChange</code>.
-                </p>
+                </Typography>
                 <Block label="Default">
                   <PreviewCode
                     preview={<PaginationExample />}
@@ -1900,7 +2093,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
 function PlusIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -1908,7 +2101,7 @@ function PlusIcon() {
 function EditIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9.5 2.5l2 2-7 7H2.5v-2l7-7z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+      <path d="M9.5 2.5l2 2-7 7H2.5v-2l7-7z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -1916,8 +2109,8 @@ function EditIcon() {
 function InboxIcon() {
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M3 20h8l2 3h6l2-3h8" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      <rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3 20h8l2 3h6l2-3h8" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -1942,9 +2135,9 @@ function ModalExample({ size }: { size: 'sm' | 'md' | 'lg' }) {
           </Row>
         }
       >
-        <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>
+        <Typography variant="body2" color="muted">
           Are you sure? All associated data will be removed from our servers within 24 hours.
-        </p>
+        </Typography>
       </Modal>
     </>
   );
@@ -1993,7 +2186,7 @@ function CheckboxPermissionsExample() {
       <Checkbox label="All permissions" checked={allChecked} indeterminate={someChecked} onChange={toggleAll} />
       <div style={{ paddingLeft: 'var(--space-5)', borderLeft: '2px solid var(--color-border)' }}>
         <Col gap={3}>
-          <Checkbox label="Read"  checked={perms.read}  onChange={() => toggle('read')} />
+          <Checkbox label="Read" checked={perms.read} onChange={() => toggle('read')} />
           <Checkbox label="Write" checked={perms.write} onChange={() => toggle('write')} />
           <Checkbox label="Admin" checked={perms.admin} onChange={() => toggle('admin')} />
         </Col>
@@ -2006,18 +2199,18 @@ function NotificationsExample() {
   const [state, setState] = useState({ email: true, push: false, marketing: false, security: true });
   const toggle = (k: keyof typeof state) => setState(p => ({ ...p, [k]: !p[k] }));
   const labels: Record<keyof typeof state, { title: string; desc: string }> = {
-    email:     { title: 'Email notifications', desc: 'Receive updates by email' },
-    push:      { title: 'Push notifications',  desc: 'Browser and mobile alerts' },
-    marketing: { title: 'Marketing emails',    desc: 'Product news and offers' },
-    security:  { title: 'Security alerts',     desc: 'Login attempts and changes' },
+    email: { title: 'Email notifications', desc: 'Receive updates by email' },
+    push: { title: 'Push notifications', desc: 'Browser and mobile alerts' },
+    marketing: { title: 'Marketing emails', desc: 'Product news and offers' },
+    security: { title: 'Security alerts', desc: 'Login attempts and changes' },
   };
   return (
     <Col gap={4}>
       {(Object.keys(state) as (keyof typeof state)[]).map((k) => (
         <Row key={k} justify="space-between" align="center">
           <Col gap={1}>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)' }}>{labels[k].title}</span>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>{labels[k].desc}</span>
+            <Typography variant="label" as="span">{labels[k].title}</Typography>
+            <Typography variant="caption" color="muted" as="span">{labels[k].desc}</Typography>
           </Col>
           <Switch checked={state[k]} onChange={() => toggle(k)} />
         </Row>
@@ -2028,10 +2221,10 @@ function NotificationsExample() {
 
 function TeamListExample() {
   const team = [
-    { name: 'Maya Lin',   role: 'Owner',  status: 'online'  as const, tone: 'success' as const },
-    { name: 'Alex Ray',   role: 'Admin',  status: 'busy'    as const, tone: 'neutral' as const },
-    { name: 'Sam Torres', role: 'Editor', status: 'away'    as const, tone: 'neutral' as const },
-    { name: 'Jamie Kim',  role: 'Viewer', status: 'offline' as const, tone: 'neutral' as const },
+    { name: 'Maya Lin', role: 'Owner', status: 'online' as const, tone: 'success' as const },
+    { name: 'Alex Ray', role: 'Admin', status: 'busy' as const, tone: 'neutral' as const },
+    { name: 'Sam Torres', role: 'Editor', status: 'away' as const, tone: 'neutral' as const },
+    { name: 'Jamie Kim', role: 'Viewer', status: 'offline' as const, tone: 'neutral' as const },
   ];
   return (
     <Col gap={3}>
@@ -2040,8 +2233,8 @@ function TeamListExample() {
           <Row align="center" gap={3}>
             <Avatar name={m.name} size="md" status={m.status} />
             <Col gap={1}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)' }}>{m.name}</span>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-muted)' }}>{m.role}</span>
+              <Typography variant="label" as="span">{m.name}</Typography>
+              <Typography variant="caption" color="muted" as="span">{m.role}</Typography>
             </Col>
           </Row>
           <Badge tone={m.tone}>{m.status}</Badge>
@@ -2062,13 +2255,13 @@ function TabsExample() {
         <Tab value="disabled" disabled>Disabled</Tab>
       </TabList>
       <TabPanel value="preview">
-        <p style={{ margin: 0, color: 'var(--color-fg-muted)' }}>This is the preview panel.</p>
+        <Typography variant="body2" color="muted">This is the preview panel.</Typography>
       </TabPanel>
       <TabPanel value="code">
         <Textarea variant="code" value={`<Button variant="primary">\n  Save changes\n</Button>`} />
       </TabPanel>
       <TabPanel value="props">
-        <p style={{ margin: 0, color: 'var(--color-fg-muted)' }}>Props documentation would live here.</p>
+        <Typography variant="body2" color="muted">Props documentation would live here.</Typography>
       </TabPanel>
     </Tabs>
   );
@@ -2098,9 +2291,9 @@ function SettingsTabsExample() {
         </Col>
       </TabPanel>
       <TabPanel value="billing">
-        <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)' }}>
+        <Typography variant="body2" color="muted">
           You are on the <Badge tone="accent">Pro</Badge> plan. Next billing: July 1, 2026.
-        </p>
+        </Typography>
       </TabPanel>
     </Tabs>
   );
@@ -2110,9 +2303,9 @@ function RadioGroupExample() {
   const [plan, setPlan] = useState('pro');
   return (
     <RadioGroup label="Billing plan" value={plan} onChange={setPlan}>
-      <Radio value="free"  label="Free — up to 3 projects" />
-      <Radio value="pro"   label="Pro — unlimited projects" />
-      <Radio value="team"  label="Team — collaboration tools" />
+      <Radio value="free" label="Free — up to 3 projects" />
+      <Radio value="pro" label="Pro — unlimited projects" />
+      <Radio value="team" label="Team — collaboration tools" />
     </RadioGroup>
   );
 }
@@ -2193,11 +2386,11 @@ function DrawerExample() {
 
 function MenuExample() {
   const items: MenuItem[] = [
-    { label: 'Edit',      icon: <EditIcon />, onClick: () => {} },
-    { label: 'Duplicate',                     onClick: () => {} },
-    { label: 'Archive',                        onClick: () => {} },
+    { label: 'Edit', icon: <EditIcon />, onClick: () => { } },
+    { label: 'Duplicate', onClick: () => { } },
+    { label: 'Archive', onClick: () => { } },
     { type: 'separator' },
-    { label: 'Delete', danger: true,           onClick: () => {} },
+    { label: 'Delete', danger: true, onClick: () => { } },
   ];
   return (
     <Row gap={3}>
@@ -2210,14 +2403,14 @@ function MenuExample() {
 function MenuWithLabelsExample() {
   const items: MenuItem[] = [
     { type: 'label', label: 'Text' },
-    { label: 'Bold',         shortcut: '⌘B', onClick: () => {} },
-    { label: 'Italic',       shortcut: '⌘I', onClick: () => {} },
-    { label: 'Underline',    shortcut: '⌘U', onClick: () => {} },
+    { label: 'Bold', shortcut: '⌘B', onClick: () => { } },
+    { label: 'Italic', shortcut: '⌘I', onClick: () => { } },
+    { label: 'Underline', shortcut: '⌘U', onClick: () => { } },
     { type: 'separator' },
     { type: 'label', label: 'Insert' },
-    { label: 'Image',        onClick: () => {} },
-    { label: 'Table',        onClick: () => {} },
-    { label: 'Code block',   onClick: () => {} },
+    { label: 'Image', onClick: () => { } },
+    { label: 'Table', onClick: () => { } },
+    { label: 'Code block', onClick: () => { } },
   ];
   return (
     <Menu trigger={<Button variant="ghost" size="sm">Format ▾</Button>} items={items} />
@@ -2226,14 +2419,14 @@ function MenuWithLabelsExample() {
 
 function ContextMenuExample() {
   const items: MenuItem[] = [
-    { label: 'Open',         onClick: () => {} },
-    { label: 'Open in tab',  onClick: () => {} },
+    { label: 'Open', onClick: () => { } },
+    { label: 'Open in tab', onClick: () => { } },
     { type: 'separator' },
-    { label: 'Copy link',    onClick: () => {} },
-    { label: 'Copy path',    onClick: () => {} },
+    { label: 'Copy link', onClick: () => { } },
+    { label: 'Copy path', onClick: () => { } },
     { type: 'separator' },
-    { label: 'Rename',       onClick: () => {} },
-    { label: 'Delete', danger: true, onClick: () => {} },
+    { label: 'Rename', onClick: () => { } },
+    { label: 'Delete', danger: true, onClick: () => { } },
   ];
   return (
     <ContextMenu
@@ -2257,7 +2450,7 @@ function ContextMenuExample() {
 }
 
 function ToastExample() {
-  const toast = useToast();
+  const { toast } = useToast();
   return (
     <Row gap={2} wrap>
       <Button variant="secondary" size="sm" onClick={() => toast({ title: 'Changes saved', tone: 'success' })}>
@@ -2316,8 +2509,8 @@ function SkeletonCardExample() {
 
 function TablePrimitivesExample() {
   const rows = [
-    { name: 'Maya Lin',   role: 'Owner',  status: 'Active'   as const },
-    { name: 'Alex Ray',   role: 'Admin',  status: 'Active'   as const },
+    { name: 'Maya Lin', role: 'Owner', status: 'Active' as const },
+    { name: 'Alex Ray', role: 'Admin', status: 'Active' as const },
     { name: 'Sam Torres', role: 'Editor', status: 'Inactive' as const },
   ];
   return (
@@ -2344,10 +2537,10 @@ function TablePrimitivesExample() {
 
 function DataTableExample() {
   const data: Record<string, unknown>[] = [
-    { id: '1', name: 'Maya Lin',   role: 'Owner',  status: 'Active',   joined: 'Jan 2024' },
-    { id: '2', name: 'Alex Ray',   role: 'Admin',  status: 'Active',   joined: 'Mar 2024' },
+    { id: '1', name: 'Maya Lin', role: 'Owner', status: 'Active', joined: 'Jan 2024' },
+    { id: '2', name: 'Alex Ray', role: 'Admin', status: 'Active', joined: 'Mar 2024' },
     { id: '3', name: 'Sam Torres', role: 'Editor', status: 'Inactive', joined: 'Jun 2024' },
-    { id: '4', name: 'Jamie Kim',  role: 'Viewer', status: 'Active',   joined: 'Aug 2024' },
+    { id: '4', name: 'Jamie Kim', role: 'Viewer', status: 'Active', joined: 'Aug 2024' },
   ];
 
   const [sortKey, setSortKey] = useState('name');
@@ -2367,13 +2560,15 @@ function DataTableExample() {
   return (
     <DataTable
       columns={[
-        { key: 'name',   header: 'Name',   cell: row => row.name as string,   sortable: true },
-        { key: 'role',   header: 'Role',   cell: row => row.role as string },
-        { key: 'status', header: 'Status', cell: row => (
-          <Badge tone={(row.status as string) === 'Active' ? 'success' : 'neutral'}>
-            {row.status as string}
-          </Badge>
-        )},
+        { key: 'name', header: 'Name', cell: row => row.name as string, sortable: true },
+        { key: 'role', header: 'Role', cell: row => row.role as string },
+        {
+          key: 'status', header: 'Status', cell: row => (
+            <Badge tone={(row.status as string) === 'Active' ? 'success' : 'neutral'}>
+              {row.status as string}
+            </Badge>
+          )
+        },
         { key: 'joined', header: 'Joined', cell: row => row.joined as string, sortable: true },
       ]}
       data={sorted}

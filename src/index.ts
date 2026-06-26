@@ -22,6 +22,7 @@ export * from './components/Drawer';
 export * from './components/EmptyState';
 export * from './components/FormField';
 export * from './components/Input';
+export * from './components/Link';
 export * from './components/Menu';
 export * from './components/Modal';
 export * from './components/Pagination';
@@ -41,6 +42,7 @@ export * from './components/Textarea';
 export * from './components/Timeline';
 export * from './components/Toast';
 export * from './components/Tooltip';
+export * from './components/Typography';
 
 // Utilities
 export { cn } from './lib/cn';
