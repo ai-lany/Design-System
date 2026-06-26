@@ -1,0 +1,63 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+}
+
+.badge[data-size='sm'] {
+  font-size: var(--text-xs);
+  padding: 3px var(--space-2);
+}
+.badge[data-size='md'] {
+  font-size: var(--text-sm);
+  padding: 4px var(--space-3);
+}
+
+/* --- Soft variant: tinted background, colored text --- */
+.badge[data-variant='soft'][data-tone='neutral'] {
+  background: var(--color-bg-muted);
+  color: var(--color-fg);
+}
+.badge[data-variant='soft'][data-tone='accent'] {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+.badge[data-variant='soft'][data-tone='success'] {
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+}
+.badge[data-variant='soft'][data-tone='warning'] {
+  background: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
+.badge[data-variant='soft'][data-tone='danger'] {
+  background: var(--color-danger-subtle);
+  color: var(--color-danger);
+}
+
+/* --- Solid variant --- */
+.badge[data-variant='solid'][data-tone='neutral'] {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+.badge[data-variant='solid'][data-tone='accent']  { background: var(--color-accent);  color: var(--color-fg-on-accent); }
+.badge[data-variant='solid'][data-tone='success'] { background: var(--color-success); color: var(--color-fg-on-accent); }
+.badge[data-variant='solid'][data-tone='warning'] { background: var(--color-warning); color: var(--color-fg-on-accent); }
+.badge[data-variant='solid'][data-tone='danger']  { background: var(--color-danger);  color: var(--color-fg-on-accent); }
+
+/* --- Outline variant --- */
+.badge[data-variant='outline'] {
+  background: transparent;
+}
+.badge[data-variant='outline'][data-tone='neutral'] { border-color: var(--color-border-strong); color: var(--color-fg); }
+.badge[data-variant='outline'][data-tone='accent']  { border-color: var(--color-accent);  color: var(--color-accent); }
+.badge[data-variant='outline'][data-tone='success'] { border-color: var(--color-success); color: var(--color-success); }
+.badge[data-variant='outline'][data-tone='warning'] { border-color: var(--color-warning); color: var(--color-warning); }
+.badge[data-variant='outline'][data-tone='danger']  { border-color: var(--color-danger);  color: var(--color-danger); }

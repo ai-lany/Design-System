@@ -1,0 +1,46 @@
+.divider {
+  display: flex;
+  align-items: center;
+  color: var(--color-fg-subtle);
+  font-size: var(--text-xs);
+}
+
+.divider[data-orientation='horizontal'] {
+  width: 100%;
+  flex-direction: row;
+  gap: var(--space-3);
+}
+
+.divider[data-orientation='horizontal']::before,
+.divider[data-orientation='horizontal']::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* No label: single line */
+.divider[data-orientation='horizontal']:not(:has(.label))::before {
+  display: none;
+}
+.divider[data-orientation='horizontal']:not(:has(.label))::after {
+  flex: 1;
+  display: block;
+}
+.divider[data-orientation='horizontal']:not(:has(.label)) {
+  height: 1px;
+  background: var(--color-border);
+}
+
+.divider[data-orientation='vertical'] {
+  width: 1px;
+  height: 100%;
+  background: var(--color-border);
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.label {
+  white-space: nowrap;
+  flex-shrink: 0;
+}

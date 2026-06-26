@@ -1,0 +1,72 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--text-sm);
+  color: var(--color-fg);
+}
+
+.root[data-label-position='start'] {
+  flex-direction: row-reverse;
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* The native input is visually hidden but still focusable + interactive */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.track {
+  position: relative;
+  flex-shrink: 0;
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+.root[data-size='sm'] .track { width: 28px; height: 16px; }
+.root[data-size='md'] .track { width: 36px; height: 20px; }
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-50%);
+  transition: left var(--duration-base) var(--ease-out);
+}
+
+.root[data-size='sm'] .thumb { width: 10px; height: 10px; }
+.root[data-size='md'] .thumb { width: 14px; height: 14px; }
+
+/* --- Checked --- */
+.input:checked + .track {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.root[data-size='sm'] .input:checked + .track .thumb { left: calc(100% - 12px); }
+.root[data-size='md'] .input:checked + .track .thumb { left: calc(100% - 16px); }
+
+/* --- Focus --- */
+.input:focus-visible + .track {
+  box-shadow: var(--shadow-focus);
+}

@@ -1,0 +1,51 @@
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  color: var(--color-fg);
+  transition:
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+.card[data-elevation='flat']     { box-shadow: none; }
+.card[data-elevation='raised']   { box-shadow: var(--shadow-sm); }
+.card[data-elevation='floating'] { box-shadow: var(--shadow-md); }
+
+.card[data-unpadded] {
+  padding: 0;
+}
+
+.card[data-interactive] {
+  cursor: pointer;
+}
+.card[data-interactive]:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.header,
+.footer {
+  padding: var(--space-4) var(--space-5);
+}
+.header {
+  border-bottom: 1px solid var(--color-border);
+}
+.footer {
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+.body {
+  padding: var(--space-5);
+}
+
+/* When a Card uses subcomponents, drop the card's own padding so sections own their spacing. */
+.card:has(.header, .body, .footer) {
+  padding: 0;
+}
