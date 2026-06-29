@@ -36,9 +36,12 @@
   --accent-900: #220b7f;
 
   /* ---------- Primitives: status ---------- */
-  --red-100: #fde2e1;  --red-500: #d8443c;   --red-700: #8c2620;
-  --green-100: #d6f0dc; --green-500: #2f8f4e; --green-700: #1d5d33;
-  --amber-100: #fbebc6; --amber-500: #c98a16; --amber-700: #82570a;
+  --red-100: #fde2e1;  --red-500: #e73128;   --red-700: #8c2620;
+  --green-100: #d6f0dc; --green-500: #2ed44a; --green-700: #239235;
+  --amber-100: #fbebc6; --amber-500: #f0a51b; --amber-700: #a16d0c;
+
+  /* ---------- Semantic: overlay ---------- */
+  --color-overlay: color-mix(in srgb, var(--gray-1000) 50%, transparent);
 
   /* ---------- Semantic: surfaces ---------- */
   --color-bg:           var(--gray-0);
@@ -144,6 +147,13 @@
   --color-syntax-tag:      #4338ca;
   --color-syntax-keyword:  #7b61ff;
   --color-syntax-number:   #047857;
+
+  /* ---------- Sticky note pastels ---------- */
+  --sticky-yellow-bg: #fef9c3;  --sticky-yellow-fg: #713f12;
+  --sticky-green-bg:  #dcfce7;  --sticky-green-fg:  #14532d;
+  --sticky-pink-bg:   #fce7f3;  --sticky-pink-fg:   #831843;
+  --sticky-blue-bg:   #dbeafe;  --sticky-blue-fg:   #1e3a5f;
+  --sticky-purple-bg: #ede9fe;  --sticky-purple-fg: #3b0764;
 }
 
 /* ---------- Dark theme ---------- */
@@ -182,6 +192,12 @@
   --color-syntax-tag:      #818cf8;
   --color-syntax-keyword:  #a78bfa;
   --color-syntax-number:   #34d399;
+
+  --sticky-yellow-bg: #3d3412;  --sticky-yellow-fg: #fef08a;
+  --sticky-green-bg:  #14311c;  --sticky-green-fg:  #86efac;
+  --sticky-pink-bg:   #3d1028;  --sticky-pink-fg:   #f9a8d4;
+  --sticky-blue-bg:   #0f2544;  --sticky-blue-fg:   #93c5fd;
+  --sticky-purple-bg: #1e0a3d;  --sticky-purple-fg: #c4b5fd;
 }
 
 /* Respect reduced motion */
