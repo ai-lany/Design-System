@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import {
   Alert,
   Avatar,
@@ -103,10 +103,57 @@ function Block({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+// ─── useMediaQuery ────────────────────────────────────────────────────────────
+
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(query).matches : false,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    setMatches(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [query]);
+  return matches;
+}
+
+// ─── NavContent ───────────────────────────────────────────────────────────────
+
+function NavContent({ onLinkClick }: { onLinkClick?: () => void }) {
+  return (
+    <Col gap={4}>
+      {NAV_GROUPS.map((group) => (
+        <div key={group.label}>
+          <div style={{
+            margin: '0 0 var(--space-1) var(--space-3)',
+            fontSize: 'var(--text-xs)',
+            fontWeight: 'var(--weight-bold)',
+            color: 'var(--color-fg-subtle)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+          }}>{group.label}</div>
+          <Col>
+            {group.items.map((name) => {
+              const id = name.toLowerCase().replace(/\s+/g, '-').replace('&', '').replace('--', '-');
+              return (
+                <Link key={name} variant="nav" href={`#${id}`} onClick={onLinkClick}>{name}</Link>
+              );
+            })}
+          </Col>
+        </div>
+      ))}
+    </Col>
+  );
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export function Example() {
   const [darkMode, setDarkMode] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const toggleDark = () => {
     const next = !darkMode;
@@ -141,6 +188,11 @@ export function Example() {
           padding: '0 var(--space-5)',
           gap: 'var(--space-4)',
         }}>
+          {isMobile && (
+            <Button variant="ghost" size="sm" iconOnly aria-label="Open navigation" onClick={() => setNavOpen(true)}>
+              <HamburgerIcon />
+            </Button>
+          )}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <div style={{
               width: 26, height: 26,
@@ -166,37 +218,18 @@ export function Example() {
         </header>
 
         <div style={{ display: 'flex', maxWidth: 1100, margin: '0 auto' }}>
-          {/* ── Sidebar ── */}
-          <nav style={{
-            width: 180, flexShrink: 0,
-            padding: 'var(--space-6) var(--space-4)',
-            position: 'sticky', top: 56,
-            height: 'calc(100vh - 56px)', overflowY: 'auto',
-            borderRight: '1px solid var(--color-border)',
-          }}>
-            <Col gap={4}>
-              {NAV_GROUPS.map((group) => (
-                <div key={group.label}>
-                  <div style={{
-                    margin: '0 0 var(--space-1) var(--space-3)',
-                    fontSize: 'var(--text-xs)',
-                    fontWeight: 'var(--weight-bold)',
-                    color: 'var(--color-fg-subtle)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                  }}>{group.label}</div>
-                  <Col>
-                    {group.items.map((name) => {
-                      const id = name.toLowerCase().replace(/\s+/g, '-').replace('&', '').replace('--', '-');
-                      return (
-                        <Link key={name} variant="nav" href={`#${id}`}>{name}</Link>
-                      );
-                    })}
-                  </Col>
-                </div>
-              ))}
-            </Col>
-          </nav>
+          {/* ── Sidebar (desktop only) ── */}
+          {!isMobile && (
+            <nav style={{
+              width: 180, flexShrink: 0,
+              padding: 'var(--space-6) var(--space-4)',
+              position: 'sticky', top: 56,
+              height: 'calc(100vh - 56px)', overflowY: 'auto',
+              borderRight: '1px solid var(--color-border)',
+            }}>
+              <NavContent />
+            </nav>
+          )}
 
           {/* ── Content ── */}
           <main style={{ flex: 1, padding: 'var(--space-7) var(--space-6)', minWidth: 0 }}>
@@ -2177,6 +2210,16 @@ const [editing, setEditing] = useState(false);
             </Col>
           </main>
         </div>
+        {/* ── Mobile nav drawer ── */}
+        <Drawer
+          open={isMobile && navOpen}
+          onClose={() => setNavOpen(false)}
+          side="left"
+          size="sm"
+          title="Navigation"
+        >
+          <NavContent onLinkClick={() => setNavOpen(false)} />
+        </Drawer>
         <Customizer />
       </div>
     </ToastProvider>
@@ -2184,6 +2227,14 @@ const [editing, setEditing] = useState(false);
 }
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
+
+function HamburgerIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function PlusIcon() {
   return (
