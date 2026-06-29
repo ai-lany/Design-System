@@ -108,7 +108,19 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function Block({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <Typography variant="h5" style={{ marginBottom: 'var(--space-3)' }}>{label}</Typography>
+      <div style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        marginBottom: 'var(--space-3)',
+        padding: '2px var(--space-2)',
+        borderRadius: 'var(--radius-sm)',
+        background: 'var(--color-accent-subtle)',
+        color: 'var(--color-accent)',
+        fontSize: 'var(--text-xs)',
+        fontWeight: 'var(--weight-semibold)',
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
+      }}>{label}</div>
       {children}
     </div>
   );
@@ -127,18 +139,48 @@ export function Example() {
 
   return (
     <ToastProvider>
-      <div style={{ minHeight: '100vh', background: 'var(--color-bg)', position: 'relative' }}>
+      <div style={{
+          minHeight: '100vh',
+          position: 'relative',
+          backgroundColor: 'var(--color-bg)',
+          backgroundImage: [
+            'radial-gradient(ellipse at center, var(--color-bg) 55%, transparent 80%)',
+            'linear-gradient(color-mix(in srgb, var(--color-border) 50%, transparent) 1px, transparent 1px)',
+            'linear-gradient(90deg, color-mix(in srgb, var(--color-border) 50%, transparent) 1px, transparent 1px)',
+          ].join(', '),
+          backgroundSize: '100% 100%, 40px 40px, 40px 40px',
+          backgroundAttachment: 'fixed, fixed, fixed',
+          backgroundRepeat: 'no-repeat, repeat, repeat',
+        }}>
         {/* ── Header ── */}
         <header style={{
           position: 'sticky', top: 0, zIndex: 50,
           height: 56,
           borderBottom: '1px solid var(--color-border)',
-          background: 'var(--color-bg)',
+          background: 'color-mix(in srgb, var(--color-bg) 88%, transparent)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           display: 'flex', alignItems: 'center',
           padding: '0 var(--space-5)',
           gap: 'var(--space-4)',
         }}>
-          <Typography variant="label" as="span">Design System</Typography>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+            <div style={{
+              width: 26, height: 26,
+              borderRadius: 'var(--radius-md)',
+              background: 'var(--color-accent)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+            }}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.95"/>
+                <rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.65"/>
+                <rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.65"/>
+                <rect x="8" y="8" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.4"/>
+              </svg>
+            </div>
+            <Typography variant="label" as="span" style={{ fontWeight: 'var(--weight-semibold)' }}>Design System</Typography>
+          </div>
           <Badge tone="accent" variant="soft">v0.1</Badge>
           <span style={{ flex: 1 }} />
           <Button variant="ghost" size="sm" onClick={toggleDark} aria-label="Toggle dark mode">
@@ -158,7 +200,14 @@ export function Example() {
             <Col gap={4}>
               {NAV_GROUPS.map((group) => (
                 <div key={group.label}>
-                  <Typography variant="h5" style={{ margin: '0 0 var(--space-1) var(--space-3)' }}>{group.label}</Typography>
+                  <div style={{
+                    margin: '0 0 var(--space-1) var(--space-3)',
+                    fontSize: 'var(--text-xs)',
+                    fontWeight: 'var(--weight-bold)',
+                    color: 'var(--color-fg-subtle)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                  }}>{group.label}</div>
                   <Col>
                     {group.items.map((name) => {
                       const id = name.toLowerCase().replace(/\s+/g, '-').replace('&', '').replace('--', '-');

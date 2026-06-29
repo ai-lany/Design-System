@@ -19,6 +19,7 @@
     "dev": "vite",
     "build": "tsup",
     "build:watch": "tsup --watch",
+    "build:docs": "vite build",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
