@@ -1,0 +1,74 @@
+/* ─── Outer note ─────────────────────────────────────────────────────────── */
+
+.note {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  overflow: hidden;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.10),
+    0 1px 3px rgba(0, 0, 0, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* ─── Sizes ──────────────────────────────────────────────────────────────── */
+
+.note[data-size='sm'] { width: 160px; height: 160px; }
+.note[data-size='md'] { width: 220px; height: 220px; }
+.note[data-size='lg'] { width: 280px; height: 280px; }
+
+/* ─── Colors ─────────────────────────────────────────────────────────────── */
+
+.note[data-color='yellow'] { background: var(--sticky-yellow-bg); color: var(--sticky-yellow-fg); }
+.note[data-color='green']  { background: var(--sticky-green-bg);  color: var(--sticky-green-fg); }
+.note[data-color='pink']   { background: var(--sticky-pink-bg);   color: var(--sticky-pink-fg); }
+.note[data-color='blue']   { background: var(--sticky-blue-bg);   color: var(--sticky-blue-fg); }
+.note[data-color='purple'] { background: var(--sticky-purple-bg); color: var(--sticky-purple-fg); }
+
+/* ─── Textarea (edit mode) ───────────────────────────────────────────────── */
+
+.textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: transparent;
+  resize: none;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  outline: none;
+  padding: 0;
+}
+
+.textarea::placeholder {
+  color: currentColor;
+  opacity: 0.4;
+}
+
+/* ─── Markdown prose (read mode) ─────────────────────────────────────────── */
+
+.prose {
+  flex: 1;
+  overflow: auto;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.prose p { margin: 0 0 0.5em; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { font-weight: var(--weight-semibold); }
+.prose em { font-style: italic; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}
+.prose ul,
+.prose ol { margin: 0 0 0.5em; padding-left: 1.25em; }
+.prose li { margin-bottom: 0.25em; }
