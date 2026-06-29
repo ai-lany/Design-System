@@ -30,6 +30,7 @@ import {
   Select,
   Skeleton,
   Slider,
+  StickyNote,
   Spinner,
   Stat,
   Switch,
@@ -50,34 +51,20 @@ import { Customizer } from './Customizer';
 
 function PreviewCode({ preview, code }: { preview: ReactNode; code: string }) {
   const [active, setActive] = useState<'preview' | 'code'>('preview');
-  const isPreview = active === 'preview';
-  const tab: React.CSSProperties = {
-    padding: 'var(--space-2) var(--space-4)',
-    fontSize: 'var(--text-xs)',
-    fontWeight: 'var(--weight-medium)',
-    cursor: 'pointer',
-    border: 'none',
-    background: 'transparent',
-    color: 'var(--color-fg-muted)',
-    borderBottom: '2px solid transparent',
-    transition: 'color 120ms, border-color 120ms',
-  };
-  const activeTab: React.CSSProperties = {
-    ...tab,
-    color: 'var(--color-fg)',
-    borderBottomColor: 'var(--color-accent)',
-  };
   return (
     <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', borderBottom: '1px solid var(--color-border)', background: 'var(--color-bg-subtle)', paddingLeft: 'var(--space-2)' }}>
-        <button style={isPreview ? activeTab : tab} onClick={() => setActive('preview')}>Preview</button>
-        <button style={!isPreview ? activeTab : tab} onClick={() => setActive('code')}>Code</button>
-      </div>
-      {isPreview ? (
-        <div style={{ padding: 'var(--space-5)', background: 'var(--color-bg)' }}>{preview}</div>
-      ) : (
-        <Textarea variant="code" defaultValue={code.trim()} />
-      )}
+      <Tabs value={active} onChange={(v) => setActive(v as 'preview' | 'code')}>
+        <TabList style={{ background: 'var(--color-bg-subtle)', paddingLeft: 'var(--space-2)' }}>
+          <Tab value="preview">Preview</Tab>
+          <Tab value="code">Code</Tab>
+        </TabList>
+        <TabPanel value="preview" style={{ padding: 'var(--space-5)', background: 'var(--color-bg)' }}>
+          {preview}
+        </TabPanel>
+        <TabPanel value="code" style={{ padding: 0 }}>
+          <Textarea variant="code" defaultValue={code.trim()} />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 }
@@ -92,7 +79,7 @@ const NAV_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Overlays', items: ['Modal', 'Drawer', 'Popover', 'Tooltip'] },
   { label: 'Feedback', items: ['Alert', 'Toast', 'Spinner', 'Skeleton', 'Progress'] },
   { label: 'Data', items: ['Table', 'Stat', 'Timeline', 'EmptyState'] },
-  { label: 'Display', items: ['Badge', 'Chip', 'Avatar', 'Card'] },
+  { label: 'Display', items: ['Badge', 'Chip', 'Avatar', 'Card', 'StickyNote'] },
   { label: 'Typography', items: ['Typography', 'Link'] },
 ];
 
@@ -108,19 +95,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function Block({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <div style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        marginBottom: 'var(--space-3)',
-        padding: '2px var(--space-2)',
-        borderRadius: 'var(--radius-sm)',
-        background: 'var(--color-accent-subtle)',
-        color: 'var(--color-accent)',
-        fontSize: 'var(--text-xs)',
-        fontWeight: 'var(--weight-semibold)',
-        letterSpacing: '0.04em',
-        textTransform: 'uppercase',
-      }}>{label}</div>
+      <div style={{ marginBottom: 'var(--space-3)' }}>
+        <Badge tone="accent" variant="soft" size="sm">{label}</Badge>
+      </div>
       {children}
     </div>
   );
@@ -2110,6 +2087,75 @@ import { Link as RouterLink } from 'react-router-dom';
 
               <Divider />
 
+              {/* ── STICKYNOTE ── */}
+              <Section id="stickynote" title="StickyNote">
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
+                  Controlled sticky-note surface with five pastel colors and three sizes. Renders a <code>textarea</code> in edit mode and markdown in read mode — toggle between them by flipping <code>readOnly</code>. Markdown is rendered via <code>react-markdown</code> (XSS-safe, no <code>dangerouslySetInnerHTML</code>).
+                </Typography>
+                <Block label="Colors">
+                  <PreviewCode
+                    preview={
+                      <Row gap={4} wrap>
+                        {(['yellow', 'green', 'pink', 'blue', 'purple'] as const).map(c => (
+                          <StickyNote
+                            key={c}
+                            color={c}
+                            size="sm"
+                            readOnly
+                            value={`**${c.charAt(0).toUpperCase() + c.slice(1)}**\nA sticky note.`}
+                          />
+                        ))}
+                      </Row>
+                    }
+                    code={`// color: yellow (default) | green | pink | blue | purple
+<StickyNote color="yellow" readOnly value="**Yellow** note." />
+<StickyNote color="green"  readOnly value="**Green** note." />
+<StickyNote color="pink"   readOnly value="**Pink** note." />
+<StickyNote color="blue"   readOnly value="**Blue** note." />
+<StickyNote color="purple" readOnly value="**Purple** note." />`}
+                  />
+                </Block>
+                <Block label="Sizes">
+                  <PreviewCode
+                    preview={
+                      <Row gap={4} align="flex-end" wrap>
+                        {(['sm', 'md', 'lg'] as const).map(s => (
+                          <StickyNote
+                            key={s}
+                            size={s}
+                            color="blue"
+                            readOnly
+                            value={`size=**"${s}"**`}
+                          />
+                        ))}
+                      </Row>
+                    }
+                    code={`// size: sm (160px) | md (220px, default) | lg (280px)
+<StickyNote size="sm" value="Small note." />
+<StickyNote size="md" value="Medium note." />
+<StickyNote size="lg" value="Large note." />`}
+                  />
+                </Block>
+                <Block label="Click-to-edit with markdown">
+                  <PreviewCode
+                    preview={<StickyNoteEditExample />}
+                    code={`const [text, setText] = useState('Click to edit.\\n\\nTry **bold** or *italic*.');
+const [editing, setEditing] = useState(false);
+
+<StickyNote
+  value={text}
+  onChange={setText}
+  color="pink"
+  readOnly={!editing}
+  onClick={() => setEditing(true)}
+  onBlur={() => setEditing(false)}
+/>`}
+                  />
+                </Block>
+              </Section>
+
+              <Divider />
+
               <Section id="pagination" title="Pagination">
                 <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Controls for navigating between pages of a data set. Automatically collapses middle pages into an ellipsis when the page count is large. Fully controlled via <code>page</code> and <code>onChange</code>.
@@ -2165,6 +2211,24 @@ function InboxIcon() {
 }
 
 // ─── Sub-examples ─────────────────────────────────────────────────────────────
+
+function StickyNoteEditExample() {
+  const [text, setText] = useState('Click to edit this note.\n\nTry **bold**, *italic*, or `code`.');
+  const [editing, setEditing] = useState(false);
+  return (
+    <StickyNote
+      value={text}
+      onChange={setText}
+      color="pink"
+      size="md"
+      readOnly={!editing}
+      onClick={() => setEditing(true)}
+      onBlur={() => setEditing(false)}
+      style={{ cursor: editing ? 'text' : 'pointer' }}
+    />
+  );
+}
+
 
 function ModalExample({ size }: { size: 'sm' | 'md' | 'lg' }) {
   const [open, setOpen] = useState(false);

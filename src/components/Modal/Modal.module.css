@@ -14,7 +14,7 @@
 .dialog[data-size='lg'] { max-width: min(100% - 2rem, 800px); }
 
 .dialog::backdrop {
-  background: color-mix(in srgb, var(--gray-1000) 50%, transparent);
+  background: var(--color-overlay);
   backdrop-filter: blur(2px);
   animation: backdrop-in var(--duration-base) var(--ease-out);
 }

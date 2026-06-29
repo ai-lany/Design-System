@@ -10,7 +10,7 @@
   white-space: nowrap;
 
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
 
   transition:
     background-color var(--duration-fast) var(--ease-out),

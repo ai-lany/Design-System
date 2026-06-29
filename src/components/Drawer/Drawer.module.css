@@ -8,7 +8,7 @@
 .backdrop {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--gray-1000) 50%, transparent);
+  background: var(--color-overlay);
   backdrop-filter: blur(2px);
   animation: backdrop-in var(--duration-base) var(--ease-out);
 }

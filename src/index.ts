@@ -35,6 +35,7 @@ export * from './components/Skeleton';
 export * from './components/Slider';
 export * from './components/Spinner';
 export * from './components/Stat';
+export * from './components/StickyNote';
 export * from './components/Switch';
 export * from './components/Table';
 export * from './components/Tabs';
