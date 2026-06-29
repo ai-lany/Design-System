@@ -1,3 +1,6 @@
+import './styles/fonts.css';
+import './styles/tokens.css';
+import './styles/reset.css';
 import { StrictMode, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Example } from './examples/Example';
