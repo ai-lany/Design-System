@@ -23,7 +23,6 @@ export * from './components/EmptyState';
 export * from './components/FormField';
 export * from './components/Input';
 export * from './components/Link';
-export * from './components/LiquidGlass';
 export * from './components/Menu';
 export * from './components/Modal';
 export * from './components/Pagination';

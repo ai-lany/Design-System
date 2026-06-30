@@ -5,6 +5,7 @@ import {
   Badge,
   Breadcrumb,
   Button,
+  GlassButton,
   Card, CardBody, CardFooter, CardHeader,
   Checkbox,
   Chip,
@@ -41,7 +42,6 @@ import {
   ToastProvider,
   Tooltip,
   Typography,
-  LiquidGlass,
   Link,
   useToast,
   type MenuItem,
@@ -80,7 +80,7 @@ const NAV_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Overlays', items: ['Modal', 'Drawer', 'Popover', 'Tooltip'] },
   { label: 'Feedback', items: ['Alert', 'Toast', 'Spinner', 'Skeleton', 'Progress'] },
   { label: 'Data', items: ['Table', 'Stat', 'Timeline', 'EmptyState'] },
-  { label: 'Display', items: ['Badge', 'Chip', 'Avatar', 'Card', 'StickyNote', 'Liquid Glass'] },
+  { label: 'Display', items: ['Badge', 'Chip', 'Avatar', 'Card', 'StickyNote'] },
   { label: 'Typography', items: ['Typography', 'Link'] },
 ];
 
@@ -292,6 +292,18 @@ export function Example() {
 <Button variant="ghost" iconOnly aria-label="Add">
   <PlusIcon />
 </Button>`}
+                  />
+                </Block>
+                <Block label="Glass">
+                  <PreviewCode
+                    preview={<GlassButtonExample />}
+                    code={`import { GlassButton } from '@your-org/design-system';
+
+// Place over any colorful background
+<GlassButton>Default</GlassButton>
+<GlassButton size="sm">Small</GlassButton>
+<GlassButton size="lg">Large</GlassButton>
+<GlassButton disabled>Disabled</GlassButton>`}
                   />
                 </Block>
               </Section>
@@ -2190,33 +2202,6 @@ const [editing, setEditing] = useState(false);
 
               <Divider />
 
-              {/* ── LIQUID GLASS ── */}
-              <Section id="liquid-glass" title="Liquid Glass">
-                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
-                  A frosted-glass container inspired by Apple visionOS. Uses{' '}
-                  <code>backdrop-filter: blur(20px) saturate(180%)</code> for real-time background
-                  blurring with a saturation boost, a semi-transparent tint, and a specular
-                  highlight that simulates refracted light from above. The vivid content
-                  underneath bleeds through visually.
-                </Typography>
-                <Block label="Default">
-                  <PreviewCode
-                    preview={<LiquidGlassExample />}
-                    code={`<LiquidGlass style={{ padding: 'var(--space-6)', maxWidth: 300, textAlign: 'center' }}>
-  <Typography variant="h4" style={{ marginBottom: 'var(--space-2)' }}>
-    Liquid Glass
-  </Typography>
-  <Typography variant="body2" style={{ marginBottom: 'var(--space-4)' }}>
-    Background bleeds through the frosted surface.
-  </Typography>
-  <Button size="sm">Get started</Button>
-</LiquidGlass>`}
-                  />
-                </Block>
-              </Section>
-
-              <Divider />
-
               <Section id="pagination" title="Pagination">
                 <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
                   Controls for navigating between pages of a data set. Automatically collapses middle pages into an ellipsis when the page count is large. Fully controlled via <code>page</code> and <code>onChange</code>.
@@ -2773,87 +2758,29 @@ function DataTableExample() {
   );
 }
 
-function LiquidGlassExample() {
+function GlassButtonExample() {
   return (
     <div
       style={{
         position: 'relative',
-        height: 320,
+        padding: 'var(--space-7)',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         background: 'linear-gradient(135deg, #6ee7b7 0%, #3b82f6 40%, #a78bfa 70%, #f472b6 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
-      {/* Blob 1 — warm orange, top-left */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: -40, left: -20,
-          width: 180, height: 180,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(251,146,60,0.85) 0%, rgba(251,146,60,0) 70%)',
-        }}
-      />
-      {/* Blob 2 — violet, bottom-right */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: -30, right: -10,
-          width: 200, height: 200,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139,92,246,0.90) 0%, rgba(139,92,246,0) 70%)',
-        }}
-      />
-      {/* Blob 3 — cyan, bottom-left */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: 10, left: 20,
-          width: 140, height: 140,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(34,211,238,0.80) 0%, rgba(34,211,238,0) 70%)',
-        }}
-      />
-      {/* Blob 4 — hot pink, top-right */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 10, right: 30,
-          width: 120, height: 120,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(236,72,153,0.75) 0%, rgba(236,72,153,0) 70%)',
-        }}
-      />
-
-      <LiquidGlass
-        style={{
-          padding: 'var(--space-6)',
-          maxWidth: 300,
-          width: '100%',
-          textAlign: 'center',
-        }}
-      >
-        <Typography
-          variant="h4"
-          style={{ marginBottom: 'var(--space-2)', color: 'rgba(0,0,0,0.80)' }}
-        >
-          Liquid Glass
-        </Typography>
-        <Typography
-          variant="body2"
-          style={{ marginBottom: 'var(--space-4)', color: 'rgba(0,0,0,0.55)' }}
-        >
-          Background bleeds through the frosted surface.
-        </Typography>
-        <Button size="sm">Get started</Button>
-      </LiquidGlass>
+      {/* Blob 1 */}
+      <div aria-hidden="true" style={{ position: 'absolute', top: -40, left: -20, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,146,60,0.85) 0%, rgba(251,146,60,0) 70%)' }} />
+      {/* Blob 2 */}
+      <div aria-hidden="true" style={{ position: 'absolute', bottom: -30, right: -10, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.90) 0%, rgba(139,92,246,0) 70%)' }} />
+      {/* Blob 3 */}
+      <div aria-hidden="true" style={{ position: 'absolute', bottom: 10, left: 20, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,211,238,0.80) 0%, rgba(34,211,238,0) 70%)' }} />
+      <Row gap={3} wrap style={{ position: 'relative' }}>
+        <GlassButton size="sm">Small</GlassButton>
+        <GlassButton>Default</GlassButton>
+        <GlassButton size="lg">Large</GlassButton>
+        <GlassButton disabled>Disabled</GlassButton>
+      </Row>
     </div>
   );
 }
