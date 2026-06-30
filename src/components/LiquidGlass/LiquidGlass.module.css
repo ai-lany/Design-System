@@ -1,0 +1,65 @@
+.glass {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+
+  background: color-mix(in srgb, white 14%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px  rgba(0, 0, 0, 0.08);
+
+  transition:
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* Specular highlight — simulates refracted light from above */
+.glass::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55)  0%,
+    rgba(255, 255, 255, 0.18) 28%,
+    rgba(255, 255, 255, 0.06) 44%,
+    transparent               44%
+  );
+}
+
+/* Inner wrapper keeps children above the specular pseudo-element */
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────── */
+
+[data-theme='dark'] .glass {
+  background: color-mix(in srgb, black 28%, transparent);
+  border-color: rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 2px 8px  rgba(0, 0, 0, 0.30);
+}
+
+[data-theme='dark'] .glass::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28)  0%,
+    rgba(255, 255, 255, 0.07) 28%,
+    rgba(255, 255, 255, 0.02) 44%,
+    transparent               44%
+  );
+}
