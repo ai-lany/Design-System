@@ -43,7 +43,6 @@
     "dist/index.css"
   ],
   "dependencies": {
-    "liquid-glass-react": "^1.1.1",
     "react-markdown": "^10.1.0"
   }
 }

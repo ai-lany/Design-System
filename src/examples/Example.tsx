@@ -5,7 +5,6 @@ import {
   Badge,
   Breadcrumb,
   Button,
-  GlassButton,
   Card, CardBody, CardFooter, CardHeader,
   Checkbox,
   Chip,
@@ -292,18 +291,6 @@ export function Example() {
 <Button variant="ghost" iconOnly aria-label="Add">
   <PlusIcon />
 </Button>`}
-                  />
-                </Block>
-                <Block label="Glass">
-                  <PreviewCode
-                    preview={<GlassButtonExample />}
-                    code={`import { GlassButton } from '@your-org/design-system';
-
-// Place over any colorful background
-<GlassButton>Default</GlassButton>
-<GlassButton size="sm">Small</GlassButton>
-<GlassButton size="lg">Large</GlassButton>
-<GlassButton disabled>Disabled</GlassButton>`}
                   />
                 </Block>
               </Section>
@@ -2755,33 +2742,6 @@ function DataTableExample() {
       sortDir={sortDir}
       onSort={handleSort}
     />
-  );
-}
-
-function GlassButtonExample() {
-  return (
-    <div
-      style={{
-        position: 'relative',
-        padding: 'var(--space-7)',
-        borderRadius: 'var(--radius-lg)',
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #6ee7b7 0%, #3b82f6 40%, #a78bfa 70%, #f472b6 100%)',
-      }}
-    >
-      {/* Blob 1 */}
-      <div aria-hidden="true" style={{ position: 'absolute', top: -40, left: -20, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,146,60,0.85) 0%, rgba(251,146,60,0) 70%)' }} />
-      {/* Blob 2 */}
-      <div aria-hidden="true" style={{ position: 'absolute', bottom: -30, right: -10, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.90) 0%, rgba(139,92,246,0) 70%)' }} />
-      {/* Blob 3 */}
-      <div aria-hidden="true" style={{ position: 'absolute', bottom: 10, left: 20, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,211,238,0.80) 0%, rgba(34,211,238,0) 70%)' }} />
-      <Row gap={3} wrap style={{ position: 'relative' }}>
-        <GlassButton size="sm">Small</GlassButton>
-        <GlassButton>Default</GlassButton>
-        <GlassButton size="lg">Large</GlassButton>
-        <GlassButton disabled>Disabled</GlassButton>
-      </Row>
-    </div>
   );
 }
 
