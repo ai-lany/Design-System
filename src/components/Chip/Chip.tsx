@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent } from 'react';
+import { Close } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Chip.module.css';
 
@@ -49,9 +50,7 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>(function Chip(
           }}
           aria-label="Remove"
         >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-            <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          <Close width="10" height="10" aria-hidden="true" />
         </button>
       )}
     </span>

@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react';
+import { Inbox, Menu as MenuIcon, PenSquare, Plus } from 'pixelarticons/react';
 import {
   Alert,
   Avatar,
@@ -190,7 +191,7 @@ export function Example() {
         }}>
           {isMobile && (
             <Button variant="ghost" size="sm" iconOnly aria-label="Open navigation" onClick={() => setNavOpen(true)}>
-              <HamburgerIcon />
+              <MenuIcon width="16" height="16" />
             </Button>
           )}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
@@ -275,21 +276,21 @@ export function Example() {
                       <Row gap={3} wrap>
                         <Button loading>Loading</Button>
                         <Button disabled>Disabled</Button>
-                        <Button variant="secondary" leading={<PlusIcon />}>With icon</Button>
-                        <Button variant="ghost" size="md" iconOnly aria-label="Add"><PlusIcon /></Button>
+                        <Button variant="secondary" leading={<Plus width="14" height="14" />}>With icon</Button>
+                        <Button variant="ghost" size="md" iconOnly aria-label="Add"><Plus width="14" height="14" /></Button>
                       </Row>
                     }
                     code={`<Button loading>Loading</Button>
 <Button disabled>Disabled</Button>
 
 // Leading / trailing icon slots
-<Button variant="secondary" leading={<PlusIcon />}>
+<Button variant="secondary" leading={<Plus width="14" height="14" />}>
   With icon
 </Button>
 
 // Icon-only (square) — always pair with aria-label
 <Button variant="ghost" iconOnly aria-label="Add">
-  <PlusIcon />
+  <Plus width="14" height="14" />
 </Button>`}
                   />
                 </Block>
@@ -909,7 +910,7 @@ const toggle = (tag: string) =>
                     preview={
                       <Row gap={4} align="center" wrap>
                         <Tooltip content="Edit this item">
-                          <Button variant="ghost" size="sm" iconOnly aria-label="Edit"><EditIcon /></Button>
+                          <Button variant="ghost" size="sm" iconOnly aria-label="Edit"><PenSquare width="14" height="14" /></Button>
                         </Tooltip>
                         <Tooltip content="Required field">
                           <Badge tone="danger">!</Badge>
@@ -1422,7 +1423,7 @@ const [date, setDate] = useState<Date | null>(null);
                   <PreviewCode
                     preview={<MenuExample />}
                     code={`const items: MenuItem[] = [
-  { label: 'Edit',    icon: <EditIcon />,  onClick: () => {} },
+  { label: 'Edit',    icon: <PenSquare width="14" height="14" />,  onClick: () => {} },
   { label: 'Duplicate', onClick: () => {} },
   { type: 'separator' },
   { label: 'Delete',  danger: true, onClick: () => {} },
@@ -1791,7 +1792,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                     preview={
                       <Col gap={6}>
                         <EmptyState
-                          icon={<InboxIcon />}
+                          icon={<Inbox width="32" height="32" />}
                           title="No messages"
                           description="When you receive messages they'll appear here."
                           action={<Button variant="secondary" size="sm">Invite teammates</Button>}
@@ -1799,7 +1800,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                       </Col>
                     }
                     code={`<EmptyState
-  icon={<InboxIcon />}
+  icon={<Inbox width="32" height="32" />}
   title="No messages"
   description="When you receive messages they'll appear here."
   action={
@@ -2226,40 +2227,6 @@ const [editing, setEditing] = useState(false);
   );
 }
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
-
-function HamburgerIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function PlusIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function EditIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9.5 2.5l2 2-7 7H2.5v-2l7-7z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function InboxIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M3 20h8l2 3h6l2-3h8" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 // ─── Sub-examples ─────────────────────────────────────────────────────────────
 
@@ -2550,7 +2517,7 @@ function DrawerExample() {
 
 function MenuExample() {
   const items: MenuItem[] = [
-    { label: 'Edit', icon: <EditIcon />, onClick: () => { } },
+    { label: 'Edit', icon: <PenSquare width="14" height="14" />, onClick: () => { } },
     { label: 'Duplicate', onClick: () => { } },
     { label: 'Archive', onClick: () => { } },
     { type: 'separator' },

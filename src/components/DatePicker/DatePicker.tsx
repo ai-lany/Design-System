@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { Calendar, ChevronLeft, ChevronRight, Close } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './DatePicker.module.css';
 
@@ -202,7 +203,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
           data-open={open || undefined}
         >
           <span className={styles.calIcon} aria-hidden="true">
-            <CalendarIcon />
+            <Calendar width="14" height="14" />
           </span>
           <button
             id={inputId}
@@ -228,9 +229,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
               aria-label="Clear date"
               onClick={clear}
             >
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+              <Close width="10" height="10" />
             </button>
           )}
         </div>
@@ -254,15 +253,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
             {/* Header */}
             <div className={styles.calHeader}>
               <button type="button" className={styles.navBtn} onClick={prevMonth} aria-label="Previous month">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M8 2L4 6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <ChevronLeft width="12" height="12" />
               </button>
               <span className={styles.calTitle}>{MONTHS[viewMonth]} {viewYear}</span>
               <button type="button" className={styles.navBtn} onClick={nextMonth} aria-label="Next month">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <ChevronRight width="12" height="12" />
               </button>
             </div>
 
@@ -317,11 +312,3 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
   );
 });
 
-function CalendarIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M4.5 1v3M9.5 1v3M1.5 6h11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}

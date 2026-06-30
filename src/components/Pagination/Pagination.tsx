@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
+import { ChevronLeft, ChevronRight } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Pagination.module.css';
 
@@ -51,7 +52,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
         disabled={page <= 1}
         aria-label="Previous page"
       >
-        <ChevronLeftIcon />
+        <ChevronLeft width="14" height="14" />
       </button>
 
       {pages.map((p, i) =>
@@ -76,24 +77,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
         disabled={page >= pageCount}
         aria-label="Next page"
       >
-        <ChevronRightIcon />
+        <ChevronRight width="14" height="14" />
       </button>
     </nav>
   );
 });
 
-function ChevronLeftIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 2L5 7l4 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M5 2l4 5-4 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}

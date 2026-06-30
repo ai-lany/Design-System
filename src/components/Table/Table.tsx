@@ -1,4 +1,5 @@
 import { forwardRef, useState, type HTMLAttributes, type ReactNode, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
+import { ArrowDown, ArrowUp, SortVertical } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import { Checkbox } from '../Checkbox';
 import styles from './Table.module.css';
@@ -231,24 +232,7 @@ export function DataTable({
 }
 
 function SortIcon({ dir }: { dir: 'asc' | 'desc' | null }) {
-  return (
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <path
-        d="M5 1v8M2 4l3-3 3 3"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity={dir === 'asc' ? 1 : 0.35}
-      />
-      <path
-        d="M5 9V1M2 6l3 3 3-3"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity={dir === 'desc' ? 1 : 0.35}
-      />
-    </svg>
-  );
+  if (dir === 'asc')  return <ArrowUp width="10" height="10" />;
+  if (dir === 'desc') return <ArrowDown width="10" height="10" />;
+  return <SortVertical width="10" height="10" />;
 }

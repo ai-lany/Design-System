@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { Check, ChevronDown } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Select.module.css';
 
@@ -302,9 +303,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
               <span className={styles.placeholder}>{placeholder}</span>
             )}
             <span className={cn(styles.chevron, open && styles.chevronOpen)} aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <ChevronDown width="12" height="12" />
             </span>
           </button>
         </div>
@@ -338,11 +337,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
                 >
                   {opt.label}
                   <span className={styles.checkIcon} aria-hidden="true">
-                    {opt.value === currentValue && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
+                    {opt.value === currentValue && <Check width="12" height="12" />}
                   </span>
                 </li>
               ))}

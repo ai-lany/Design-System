@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Close } from 'pixelarticons/react';
 import { Button, Card, Col, Divider, Row } from '../index';
 
 // ── Token defaults (mirror tokens.css) ────────────────────────────────────────
@@ -198,7 +199,7 @@ export function Customizer() {
           >
             <span style={{ fontWeight: 'var(--weight-semibold)', fontSize: 'var(--text-sm)' }}>Customize</span>
             <Button variant="ghost" size="sm" iconOnly aria-label="Close" onClick={() => setOpen(false)}>
-              <CloseIcon />
+              <Close width="12" height="12" />
             </Button>
           </Row>
 
@@ -372,10 +373,3 @@ export function Customizer() {
   );
 }
 
-function CloseIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}

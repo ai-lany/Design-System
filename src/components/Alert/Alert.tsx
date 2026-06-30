@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { Check, Close, InfoBox, SquareAlert } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Alert.module.css';
 
@@ -38,9 +39,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
           aria-label="Dismiss"
           onClick={onClose}
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          <Close width="12" height="12" />
         </button>
       )}
     </div>
@@ -49,33 +48,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function AlertIcon({ tone }: { tone: AlertTone }) {
   switch (tone) {
-    case 'info':
-      return (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M8 7v4M8 5.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      );
-    case 'success':
-      return (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case 'warning':
-      return (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 1.5L14.5 13H1.5L8 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-          <path d="M8 6v3M8 10.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      );
-    case 'danger':
-      return (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      );
+    case 'info':    return <InfoBox width="16" height="16" />;
+    case 'success': return <Check width="16" height="16" />;
+    case 'warning': return <SquareAlert width="16" height="16" />;
+    case 'danger':  return <Close width="16" height="16" />;
   }
 }

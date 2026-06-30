@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { ChevronRight } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Breadcrumb.module.css';
 
@@ -18,7 +19,7 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Brea
   { items, separator, className, ...rest },
   ref,
 ) {
-  const sep = separator ?? <ChevronIcon />;
+  const sep = separator ?? <ChevronRight width="12" height="12" />;
 
   return (
     <nav ref={ref} aria-label="Breadcrumb" className={cn(styles.nav, className)} {...rest}>
@@ -46,10 +47,3 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Brea
   );
 });
 
-function ChevronIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}

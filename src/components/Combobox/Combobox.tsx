@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { Check, ChevronDown } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import type { SelectOption } from '../Select';
 import styles from './Combobox.module.css';
@@ -210,9 +211,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combo
             autoComplete="off"
           />
           <span className={styles.chevron} aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <ChevronDown width="12" height="12" />
           </span>
         </div>
 
@@ -245,11 +244,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combo
                   >
                     {opt.label}
                     <span className={styles.checkIcon} aria-hidden="true">
-                      {opt.value === currentValue && (
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
+                      {opt.value === currentValue && <Check width="12" height="12" />}
                     </span>
                   </li>
                 ))

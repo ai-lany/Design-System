@@ -4,6 +4,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { Close } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Drawer.module.css';
 
@@ -79,9 +80,7 @@ export function Drawer({
               aria-label="Close"
               onClick={onClose}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+              <Close width="14" height="14" />
             </button>
           </header>
         )}
