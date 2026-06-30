@@ -4,7 +4,7 @@ import styles from './Alert.module.css';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 
-export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   tone?: AlertTone;
   title?: ReactNode;
   /** Callback when the dismiss button is clicked. Omit to hide the button. */

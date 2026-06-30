@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/cn';
 import styles from './Pagination.module.css';
 
-export interface PaginationProps extends HTMLAttributes<HTMLElement> {
+export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   page: number;
   pageCount: number;
   onChange: (page: number) => void;

@@ -154,7 +154,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps & HTMLAttributes<HTMLDi
           ref: anchorRef,
           onClick: (...args: unknown[]) => {
             setOpen(v => !v);
-            (trigger.props as Record<string, unknown>).onClick?.(...args);
+            (trigger.props as Record<string, (...args: unknown[]) => void>).onClick?.(...args);
           },
           onKeyDown: handleKeyDown,
           'aria-expanded': open,

@@ -80,7 +80,7 @@ export function ContextMenu({ trigger, items, className }: ContextMenuProps) {
     ? cloneElement(trigger as ReactElement<Record<string, unknown>>, {
         onContextMenu: (e: React.MouseEvent) => {
           handleContextMenu(e);
-          (trigger.props as Record<string, unknown>).onContextMenu?.(e);
+          (trigger.props as Record<string, (e: React.MouseEvent) => void>).onContextMenu?.(e);
         },
       })
     : trigger;
