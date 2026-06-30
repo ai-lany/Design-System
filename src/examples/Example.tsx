@@ -1,5 +1,5 @@
-import { type ReactNode, useEffect, useState } from 'react';
-import { Inbox, Menu as MenuIcon, PenSquare, Plus } from 'pixelarticons/react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { Inbox, Menu as MenuIcon, PenSquare, Plus, Search } from 'pixelarticons/react';
 import {
   Alert,
   Avatar,
@@ -84,13 +84,23 @@ const NAV_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Typography', items: ['Typography', 'Link'] },
 ];
 
+const SearchContext = createContext('');
+
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+  const search = useContext(SearchContext);
+  if (search.trim() && !title.toLowerCase().includes(search.toLowerCase())) return null;
   return (
     <section id={id} style={{ scrollMarginTop: '64px' }}>
       <Typography variant="h2" style={{ marginBottom: 'var(--space-5)' }}>{title}</Typography>
       <Col gap={6}>{children}</Col>
     </section>
   );
+}
+
+function SectionDivider() {
+  const search = useContext(SearchContext);
+  if (search.trim()) return null;
+  return <Divider />;
 }
 
 function Block({ label, children }: { label: string; children: ReactNode }) {
@@ -123,9 +133,19 @@ function useMediaQuery(query: string): boolean {
 // ─── NavContent ───────────────────────────────────────────────────────────────
 
 function NavContent({ onLinkClick }: { onLinkClick?: () => void }) {
+  const search = useContext(SearchContext);
+  const filteredGroups = NAV_GROUPS
+    .map(group => ({
+      ...group,
+      items: search.trim()
+        ? group.items.filter(name => name.toLowerCase().includes(search.toLowerCase()))
+        : group.items,
+    }))
+    .filter(group => group.items.length > 0);
+
   return (
     <Col gap={4}>
-      {NAV_GROUPS.map((group) => (
+      {filteredGroups.map((group) => (
         <div key={group.label}>
           <div style={{
             margin: '0 0 var(--space-1) var(--space-3)',
@@ -145,6 +165,11 @@ function NavContent({ onLinkClick }: { onLinkClick?: () => void }) {
           </Col>
         </div>
       ))}
+      {filteredGroups.length === 0 && (
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-fg-muted)', padding: '0 var(--space-3)' }}>
+          No results
+        </p>
+      )}
     </Col>
   );
 }
@@ -154,6 +179,7 @@ function NavContent({ onLinkClick }: { onLinkClick?: () => void }) {
 export function Example() {
   const [darkMode, setDarkMode] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const toggleDark = () => {
@@ -163,6 +189,7 @@ export function Example() {
   };
 
   return (
+    <SearchContext.Provider value={search}>
     <ToastProvider>
       <div style={{
           minHeight: '100vh',
@@ -213,6 +240,15 @@ export function Example() {
           </div>
           <Badge tone="accent" variant="soft">v0.1</Badge>
           <span style={{ flex: 1 }} />
+          <Input
+            inputSize="sm"
+            placeholder="Search components…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            leadingIcon={<Search width="14" height="14" />}
+            style={{ width: 200 }}
+            aria-label="Search components"
+          />
           <Button variant="ghost" size="sm" onClick={toggleDark} aria-label="Toggle dark mode">
             {darkMode ? 'Light mode' : 'Dark mode'}
           </Button>
@@ -296,7 +332,7 @@ export function Example() {
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── INPUT ── */}
               <Section id="input" title="Input">
@@ -362,7 +398,7 @@ export function Example() {
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── SELECT ── */}
               <Section id="select" title="Select">
@@ -455,7 +491,7 @@ const [role, setRole] = useState('');
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── CHECKBOX ── */}
               <Section id="checkbox" title="Checkbox">
@@ -503,7 +539,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── SWITCH ── */}
               <Section id="switch" title="Switch">
@@ -567,7 +603,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── CARD ── */}
               <Section id="card" title="Card">
@@ -632,7 +668,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── MODAL ── */}
               <Section id="modal" title="Modal">
@@ -669,7 +705,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── BADGE ── */}
               <Section id="badge" title="Badge">
@@ -712,7 +748,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── CHIP ── */}
               <Section id="chip" title="Chip">
@@ -760,7 +796,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── AVATAR ── */}
               <Section id="avatar" title="Avatar">
@@ -821,7 +857,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TABS ── */}
               <Section id="tabs" title="Tabs">
@@ -877,7 +913,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TOOLTIP ── */}
               <Section id="tooltip" title="Tooltip">
@@ -934,7 +970,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── DIVIDER ── */}
               <Section id="divider" title="Divider">
@@ -980,7 +1016,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── CONTAINER ── */}
               <Section id="container" title="Container">
@@ -1014,7 +1050,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── ROW & COL ── */}
               <Section id="row-col" title="Row & Col">
@@ -1048,7 +1084,7 @@ const toggle = (tag: string) =>
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TEXTAREA ── */}
               <Section id="textarea" title="Textarea">
@@ -1115,7 +1151,7 @@ export function App() {
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── COMBOBOX ── */}
               <Section id="combobox" title="Combobox">
@@ -1156,7 +1192,7 @@ export function App() {
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── DATEPICKER ── */}
               <Section id="datepicker" title="DatePicker">
@@ -1205,7 +1241,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── SLIDER ── */}
               <Section id="slider" title="Slider">
@@ -1266,7 +1302,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── RADIO ── */}
               <Section id="radio" title="Radio">
@@ -1308,7 +1344,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── FORMFIELD ── */}
               <Section id="formfield" title="FormField">
@@ -1341,7 +1377,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── DRAWER ── */}
               <Section id="drawer" title="Drawer">
@@ -1378,7 +1414,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── POPOVER ── */}
               <Section id="popover" title="Popover">
@@ -1412,7 +1448,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── MENU ── */}
               <Section id="menu" title="Menu">
@@ -1458,7 +1494,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── CONTEXTMENU ── */}
               <Section id="contextmenu" title="ContextMenu">
@@ -1486,7 +1522,7 @@ const [date, setDate] = useState<Date | null>(null);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TOAST ── */}
               <Section id="toast" title="Toast">
@@ -1515,7 +1551,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── ALERT ── */}
               <Section id="alert" title="Alert">
@@ -1557,7 +1593,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── SPINNER ── */}
               <Section id="spinner" title="Spinner">
@@ -1601,7 +1637,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── SKELETON ── */}
               <Section id="skeleton" title="Skeleton">
@@ -1655,7 +1691,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── PROGRESS ── */}
               <Section id="progress" title="Progress">
@@ -1697,7 +1733,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── STAT ── */}
               <Section id="stat" title="Stat">
@@ -1734,7 +1770,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TIMELINE ── */}
               <Section id="timeline" title="Timeline">
@@ -1780,7 +1816,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── EMPTYSTATE ── */}
               <Section id="emptystate" title="EmptyState">
@@ -1813,7 +1849,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── TABLE ── */}
               <Section id="table" title="Table">
@@ -1864,7 +1900,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── BREADCRUMB ── */}
               <Section id="breadcrumb" title="Breadcrumb">
@@ -1909,7 +1945,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── PAGINATION ── */}
               {/* ── TYPOGRAPHY ── */}
@@ -2027,7 +2063,7 @@ toast({ title: 'Background task running…', duration: 0 });`}
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── LINK ── */}
               <Section id="link" title="Link">
@@ -2119,7 +2155,7 @@ import { Link as RouterLink } from 'react-router-dom';
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               {/* ── STICKYNOTE ── */}
               <Section id="stickynote" title="StickyNote">
@@ -2188,7 +2224,7 @@ const [editing, setEditing] = useState(false);
                 </Block>
               </Section>
 
-              <Divider />
+              <SectionDivider />
 
               <Section id="pagination" title="Pagination">
                 <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
@@ -2224,6 +2260,7 @@ const [editing, setEditing] = useState(false);
         <Customizer />
       </div>
     </ToastProvider>
+    </SearchContext.Provider>
   );
 }
 
