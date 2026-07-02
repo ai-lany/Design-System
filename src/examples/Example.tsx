@@ -198,8 +198,8 @@ export function Example() {
           backgroundColor: 'var(--color-bg)',
           backgroundImage: [
             'radial-gradient(ellipse at center, var(--color-bg) 55%, transparent 80%)',
-            'linear-gradient(color-mix(in srgb, var(--color-border) 50%, transparent) 1px, transparent 1px)',
-            'linear-gradient(90deg, color-mix(in srgb, var(--color-border) 50%, transparent) 1px, transparent 1px)',
+            'linear-gradient(color-mix(in srgb, var(--color-border) 15%, transparent) 1px, transparent 1px)',
+            'linear-gradient(90deg, color-mix(in srgb, var(--color-border) 15%, transparent) 1px, transparent 1px)',
           ].join(', '),
           backgroundSize: '100% 100%, 40px 40px, 40px 40px',
           backgroundAttachment: 'fixed, fixed, fixed',

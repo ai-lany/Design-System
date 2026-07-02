@@ -31,11 +31,11 @@
 }
 .badge[data-variant='soft'][data-tone='success'] {
   background: var(--color-success-subtle);
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 .badge[data-variant='soft'][data-tone='warning'] {
   background: var(--color-warning-subtle);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
 }
 .badge[data-variant='soft'][data-tone='danger'] {
   background: var(--color-danger-subtle);
@@ -56,8 +56,9 @@
   color: var(--color-bg);
 }
 .badge[data-variant='solid'][data-tone='accent']  { background: var(--color-accent);  color: var(--color-fg-on-accent); }
-.badge[data-variant='solid'][data-tone='success'] { background: var(--color-success); color: var(--color-fg-on-accent); }
-.badge[data-variant='solid'][data-tone='warning'] { background: var(--color-warning); color: var(--color-fg-on-accent); }
+/* Success and warning fills are too bright for white text — use near-black ink. */
+.badge[data-variant='solid'][data-tone='success'] { background: var(--color-success); color: var(--color-fg-on-vivid-fill); }
+.badge[data-variant='solid'][data-tone='warning'] { background: var(--color-warning); color: var(--color-fg-on-vivid-fill); }
 .badge[data-variant='solid'][data-tone='danger']  { background: var(--color-danger);  color: var(--color-fg-on-accent); }
 /* Bright signal tints need dark ink, not white, to stay legible. */
 .badge[data-variant='solid'][data-tone='lime'] { background: var(--color-signal-lime); color: var(--lime-700); }
@@ -69,8 +70,8 @@
 }
 .badge[data-variant='outline'][data-tone='neutral'] { border-color: var(--color-border-strong); color: var(--color-fg); }
 .badge[data-variant='outline'][data-tone='accent']  { border-color: var(--color-accent);  color: var(--color-accent); }
-.badge[data-variant='outline'][data-tone='success'] { border-color: var(--color-success); color: var(--color-success); }
-.badge[data-variant='outline'][data-tone='warning'] { border-color: var(--color-warning); color: var(--color-warning); }
+.badge[data-variant='outline'][data-tone='success'] { border-color: var(--color-success); color: var(--color-success-fg); }
+.badge[data-variant='outline'][data-tone='warning'] { border-color: var(--color-warning); color: var(--color-warning-fg); }
 .badge[data-variant='outline'][data-tone='danger']  { border-color: var(--color-danger);  color: var(--color-danger); }
 .badge[data-variant='outline'][data-tone='lime'] { border-color: var(--color-signal-lime); color: var(--color-signal-lime-fg); }
 .badge[data-variant='outline'][data-tone='pink'] { border-color: var(--color-signal-pink); color: var(--color-signal-pink-fg); }

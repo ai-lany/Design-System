@@ -37,8 +37,8 @@
 
   /* ---------- Primitives: status ---------- */
   --red-100: #fde2e1;  --red-500: #e73128;   --red-700: #8c2620;
-  --green-100: #d6f0dc; --green-500: #2ed44a; --green-700: #239235;
-  --amber-100: #fbebc6; --amber-500: #f0a51b; --amber-700: #a16d0c;
+  --green-100: #d6f0dc; --green-500: #2ed44a; --green-700: #1a6629;
+  --amber-100: #fbebc6; --amber-500: #f0a51b; --amber-700: #7a4a04;
 
   /* ---------- Primitives: signal accents (pixel/retro highlights) ---------- */
   --lime-100: #f4fbd3; --lime-500: #d4f951; --lime-700: #3a4a06;
@@ -80,6 +80,12 @@
   --color-danger-subtle:  var(--red-100);
   --color-success-subtle: var(--green-100);
   --color-warning-subtle: var(--amber-100);
+  /* -fg: readable ink for text/icons on light or subtle surfaces.
+   * The 500-level hues are too bright to meet contrast on white — use -fg instead.
+   * -on-vivid-fill: near-black ink for text on solid vivid-colored backgrounds. */
+  --color-success-fg:      var(--green-700);
+  --color-warning-fg:      var(--amber-700);
+  --color-fg-on-vivid-fill: var(--gray-900);
 
   /* ---------- Semantic: signal accents ----------
    * Retro highlight colors used only in small doses — tags, status marks,
@@ -105,9 +111,9 @@
 
   /* ---------- Radii ---------- */
   --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   20px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   16px;
   --radius-full: 9999px;
 
   /* ---------- Typography ---------- */
@@ -198,6 +204,9 @@
   --color-danger-subtle:  color-mix(in srgb, var(--red-500) 18%, var(--gray-900));
   --color-success-subtle: color-mix(in srgb, var(--green-500) 18%, var(--gray-900));
   --color-warning-subtle: color-mix(in srgb, var(--amber-500) 18%, var(--gray-900));
+  /* On dark surfaces the bright 500-level hues are readable — flip fg to match. */
+  --color-success-fg: var(--green-500);
+  --color-warning-fg: var(--amber-500);
 
   /* Signal tints stay bright on dark; the ink flips to the bright hue itself. */
   --color-signal-lime-fg:     var(--lime-500);

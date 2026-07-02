@@ -42,9 +42,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--color-bg-muted);
-  border-radius: var(--radius-full);
+  height: 3px;
+  background: var(--color-border);
   pointer-events: none;
   z-index: 0;
 }
@@ -53,9 +52,8 @@
 .fill {
   position: absolute;
   left: 0;
-  height: 4px;
-  background: var(--color-accent);
-  border-radius: var(--radius-full);
+  height: 3px;
+  background: var(--color-fg);
   pointer-events: none;
   z-index: 1;
 }
@@ -65,46 +63,44 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 4px;
+  height: 3px;
   appearance: none;
   -webkit-appearance: none;
   background: transparent;
-  border-radius: var(--radius-full);
   cursor: pointer;
   outline: none;
 }
 
 .input:disabled { cursor: not-allowed; }
 
-/* Thumb */
+/* Thumb — pixelated circle (octagon with 2px corner cuts on a 16×16 block) */
 .input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: var(--radius-full);
-  background: var(--color-bg);
-  border: 2px solid var(--color-accent);
-  box-shadow: var(--shadow-sm);
-  transition:
-    box-shadow var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
+  width: 12px;
+  height: 12px;
+  border-radius: 0;
+  background: var(--color-fg);
+  border: none;
+  box-shadow: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .input::-moz-range-thumb {
   width: 16px;
   height: 16px;
-  border-radius: var(--radius-full);
-  background: var(--color-bg);
-  border: 2px solid var(--color-accent);
-  box-shadow: var(--shadow-sm);
+  border-radius: 0;
+  background: var(--color-fg);
+  border: none;
+  box-shadow: none;
   cursor: pointer;
 }
 
 .input:focus-visible::-webkit-slider-thumb {
-  box-shadow: var(--shadow-focus);
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
 }
 
 .input:hover:not(:disabled)::-webkit-slider-thumb {
-  border-color: var(--color-accent-hover);
+  background: var(--color-fg-muted);
 }

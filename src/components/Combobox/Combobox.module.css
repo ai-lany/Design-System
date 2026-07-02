@@ -38,22 +38,21 @@
 .root[data-size='md'] .field { height: var(--control-height-md); }
 .root[data-size='lg'] .field { height: var(--control-height-lg); }
 
-.field:hover:not([data-disabled]):not([data-error]) {
+.field:hover:not([data-disabled]):not([data-error]):not(:focus-within) {
   border-color: var(--color-border-strong);
 }
 
 .field:focus-within,
 .field[data-open] {
-  border-color: var(--color-border-focus);
-  box-shadow: var(--shadow-focus);
+  border-color: #000;
+  box-shadow: inset 0 0 0 1px #000;
 }
 
 .field[data-error] {
   border-color: var(--color-danger);
 }
-
 .field[data-error]:focus-within {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 25%, transparent);
+  box-shadow: inset 0 0 0 1px var(--color-danger);
 }
 
 .field[data-disabled] {

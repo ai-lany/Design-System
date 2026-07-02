@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Close } from 'pixelarticons/react';
-import { Button, Card, Col, Divider, Row } from '../index';
+import { Button, Card, Col, Divider, Row, Slider } from '../index';
 
 // ── Token defaults (mirror tokens.css) ────────────────────────────────────────
 
@@ -249,21 +249,12 @@ export function Customizer() {
 
             {/* Border radius */}
             <Col gap={2}>
-              <Row align="center" justify="space-between">
-                <label htmlFor="radius-slider" style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg-muted)' }}>
-                  Border radius
-                </label>
-                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--color-fg-subtle)' }}>{radius}px</span>
-              </Row>
-              <input
-                id="radius-slider"
-                type="range"
-                min={0}
-                max={64}
-                step={1}
+              <Slider
+                label="Border radius"
+                min={0} max={64} step={1}
                 value={radius}
-                onChange={e => handleRadius(Number(e.target.value))}
-                style={{ width: '100%', accentColor: 'var(--color-accent)' }}
+                onChange={handleRadius}
+                formatValue={v => `${v}px`}
               />
               <Row justify="space-between">
                 <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-fg-subtle)' }}>Sharp</span>
@@ -305,24 +296,13 @@ export function Customizer() {
             <Divider />
 
             {/* Text size */}
-            <Col gap={2}>
-              <Row align="center" justify="space-between">
-                <label htmlFor="text-slider" style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg-muted)' }}>
-                  Content text size
-                </label>
-                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--color-fg-subtle)' }}>{textBase}px</span>
-              </Row>
-              <input
-                id="text-slider"
-                type="range"
-                min={13}
-                max={24}
-                step={1}
-                value={textBase}
-                onChange={e => handleTextBase(Number(e.target.value))}
-                style={{ width: '100%', accentColor: 'var(--color-accent)' }}
-              />
-            </Col>
+            <Slider
+              label="Content text size"
+              min={13} max={24} step={1}
+              value={textBase}
+              onChange={handleTextBase}
+              formatValue={v => `${v}px`}
+            />
 
             <Divider />
 
