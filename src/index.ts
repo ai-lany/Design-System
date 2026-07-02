@@ -26,6 +26,7 @@ export * from './components/Link';
 export * from './components/Menu';
 export * from './components/Modal';
 export * from './components/Pagination';
+export * from './components/PixelMark';
 export * from './components/Popover';
 export * from './components/Progress';
 export * from './components/Radio';

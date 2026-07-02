@@ -40,6 +40,10 @@
   --green-100: #d6f0dc; --green-500: #2ed44a; --green-700: #239235;
   --amber-100: #fbebc6; --amber-500: #f0a51b; --amber-700: #a16d0c;
 
+  /* ---------- Primitives: signal accents (pixel/retro highlights) ---------- */
+  --lime-100: #f4fbd3; --lime-500: #d4f951; --lime-700: #3a4a06;
+  --pink-100: #ffe6f6; --pink-500: #ff5ecb; --pink-700: #8a0a5c;
+
   /* ---------- Semantic: overlay ---------- */
   --color-overlay: color-mix(in srgb, var(--gray-1000) 50%, transparent);
 
@@ -76,6 +80,18 @@
   --color-danger-subtle:  var(--red-100);
   --color-success-subtle: var(--green-100);
   --color-warning-subtle: var(--amber-100);
+
+  /* ---------- Semantic: signal accents ----------
+   * Retro highlight colors used only in small doses — tags, status marks,
+   * pixel accents. `-fg` is a readable ink for text/icons on a light surface,
+   * since the base tints are too bright to sit on white.
+   */
+  --color-signal-lime:        var(--lime-500);
+  --color-signal-lime-fg:     var(--lime-700);
+  --color-signal-lime-subtle: var(--lime-100);
+  --color-signal-pink:        var(--pink-500);
+  --color-signal-pink-fg:     var(--pink-700);
+  --color-signal-pink-subtle: var(--pink-100);
 
   /* ---------- Spacing (4px base) ---------- */
   --space-1: 0.25rem;  /*  4px */
@@ -182,6 +198,12 @@
   --color-danger-subtle:  color-mix(in srgb, var(--red-500) 18%, var(--gray-900));
   --color-success-subtle: color-mix(in srgb, var(--green-500) 18%, var(--gray-900));
   --color-warning-subtle: color-mix(in srgb, var(--amber-500) 18%, var(--gray-900));
+
+  /* Signal tints stay bright on dark; the ink flips to the bright hue itself. */
+  --color-signal-lime-fg:     var(--lime-500);
+  --color-signal-lime-subtle: color-mix(in srgb, var(--lime-500) 18%, var(--gray-900));
+  --color-signal-pink-fg:     var(--pink-500);
+  --color-signal-pink-subtle: color-mix(in srgb, var(--pink-500) 20%, var(--gray-900));
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px -2px rgba(0, 0, 0, 0.5);

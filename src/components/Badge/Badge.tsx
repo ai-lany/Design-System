@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/cn';
 import styles from './Badge.module.css';
 
-export type BadgeTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
+export type BadgeTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'lime' | 'pink';
 export type BadgeVariant = 'soft' | 'solid' | 'outline';
 export type BadgeSize = 'sm' | 'md';
 

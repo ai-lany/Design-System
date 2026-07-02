@@ -23,6 +23,7 @@ import {
   Menu,
   Modal,
   Pagination,
+  PixelMark,
   Popover,
   Progress,
   Radio,
@@ -223,18 +224,22 @@ export function Example() {
           )}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <div style={{
+              position: 'relative',
               width: 26, height: 26,
               borderRadius: 'var(--radius-md)',
-              background: 'var(--color-accent)',
+              background: 'var(--color-fg)',
+              color: 'var(--color-bg)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0,
             }}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.95"/>
-                <rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.65"/>
-                <rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.65"/>
-                <rect x="8" y="8" width="4.5" height="4.5" rx="1.2" fill="white" opacity="0.4"/>
-              </svg>
+              <PixelMark name="star" size={14} />
+              {/* Lime signal dot — the pixel/retro accent, kept deliberately tiny. */}
+              <span style={{
+                position: 'absolute', top: -2, right: -2,
+                width: 8, height: 8, borderRadius: '50%',
+                background: 'var(--color-signal-lime)',
+                border: '2px solid var(--color-bg)',
+              }} />
             </div>
             <Typography variant="label" as="span" style={{ fontWeight: 'var(--weight-semibold)' }}>Design System</Typography>
           </div>
@@ -710,7 +715,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
               {/* ── BADGE ── */}
               <Section id="badge" title="Badge">
                 <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
-                  Compact inline label for status, counts, or categories. Combines five tones (<code>neutral</code>, <code>accent</code>, <code>success</code>, <code>warning</code>, <code>danger</code>) with three surface variants (<code>soft</code>, <code>solid</code>, <code>outline</code>).
+                  Compact inline label for status, counts, or categories. Combines seven tones (<code>neutral</code>, <code>accent</code>, <code>success</code>, <code>warning</code>, <code>danger</code>, plus the signal accents <code>lime</code> and <code>pink</code>) with three surface variants (<code>soft</code>, <code>solid</code>, <code>outline</code>).
                 </Typography>
                 <Block label="Variants × tones">
                   <PreviewCode
@@ -719,7 +724,7 @@ const someChecked = Object.values(perms).some(Boolean) && !allChecked;
                         {(['soft', 'solid', 'outline'] as const).map(v => (
                           <Row key={v} gap={2} wrap align="center">
                             <Typography variant="caption" color="subtle" as="span" style={{ width: 52 }}>{v}</Typography>
-                            {(['neutral', 'accent', 'success', 'warning', 'danger'] as const).map(t => (
+                            {(['neutral', 'accent', 'success', 'warning', 'danger', 'lime', 'pink'] as const).map(t => (
                               <Badge key={t} tone={t} variant={v}>{t}</Badge>
                             ))}
                           </Row>

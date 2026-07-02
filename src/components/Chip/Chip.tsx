@@ -3,7 +3,7 @@ import { Close } from 'pixelarticons/react';
 import { cn } from '../../lib/cn';
 import styles from './Chip.module.css';
 
-export type ChipTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
+export type ChipTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'lime' | 'pink';
 
 export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: ChipTone;
