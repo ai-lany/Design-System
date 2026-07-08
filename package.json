@@ -19,9 +19,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsup",
-    "prepare": "tsup",
-    "build:watch": "tsup --watch",
+    "build": "vite build --config vite.lib.config.ts && tsc -p tsconfig.json --emitDeclarationOnly",
+    "prepare": "npm run build",
     "build:docs": "vite build",
     "typecheck": "tsc --noEmit"
   },

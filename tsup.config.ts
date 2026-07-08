@@ -7,6 +7,8 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external: ['react', 'react-dom', 'react/jsx-runtime'],
-  // CSS Modules are extracted to dist/index.css — import it once in your app.
-  // Tokens and reset CSS are included automatically via the index.ts imports.
+  // NOTE: tsup/esbuild extract *.module.css but export an empty class map, so
+  // consumers of the built package get unstyled components. The library JS + CSS
+  // are built with Vite library mode instead (see vite.lib.config.ts); tsup is
+  // kept only for reference / declaration experiments.
 });
