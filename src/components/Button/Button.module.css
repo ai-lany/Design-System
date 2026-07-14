@@ -23,6 +23,11 @@
   -webkit-user-select: none;
 }
 
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
 .button:active:not(:disabled) {
   transform: scale(0.98);
 }
