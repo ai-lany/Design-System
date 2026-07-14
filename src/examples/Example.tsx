@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useId, useState, type ReactNode } from 'react';
 import { Inbox, Menu as MenuIcon, PenSquare, Plus, Search } from 'pixelarticons/react';
 import {
   Alert,
@@ -48,25 +48,101 @@ import {
   type MenuItem,
 } from '../index';
 import { Customizer } from './Customizer';
+import { highlight } from '../lib/highlight';
 
 // ─── PreviewCode ──────────────────────────────────────────────────────────────
 
 function PreviewCode({ preview, code }: { preview: ReactNode; code: string }) {
   const [active, setActive] = useState<'preview' | 'code'>('preview');
+  const uid = useId();
+  const tabId = (k: string) => `${uid}-${k}-tab`;
+  const panelId = (k: string) => `${uid}-${k}-panel`;
+
+  // Segmented toggle typed in the system sans (matches Button/Tab), with the
+  // active tab shown as a lime "stamp" — the signature accent on an inked bar.
+  const tab = (key: 'preview' | 'code', label: string) => {
+    const selected = active === key;
+    return (
+      <button
+        type="button"
+        role="tab"
+        id={tabId(key)}
+        aria-selected={selected}
+        aria-controls={panelId(key)}
+        tabIndex={selected ? 0 : -1}
+        onClick={() => setActive(key)}
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            setActive((a) => (a === 'preview' ? 'code' : 'preview'));
+          }
+        }}
+        style={{
+          fontFamily: 'inherit',
+          fontSize: 'var(--text-sm)',
+          fontWeight: 'var(--weight-medium)',
+          lineHeight: 1,
+          padding: '6px 12px',
+          border: 'none',
+          borderRadius: 'var(--radius-sm)',
+          cursor: 'pointer',
+          background: selected ? 'var(--color-signal-lime)' : 'transparent',
+          color: selected ? 'var(--lime-700)' : 'var(--color-fg-muted)',
+        }}
+      >
+        {label}
+      </button>
+    );
+  };
+
   return (
-    <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-      <Tabs value={active} onChange={(v) => setActive(v as 'preview' | 'code')}>
-        <TabList style={{ background: 'var(--color-bg-subtle)', paddingLeft: 'var(--space-2)' }}>
-          <Tab value="preview">Preview</Tab>
-          <Tab value="code">Code</Tab>
-        </TabList>
-        <TabPanel value="preview" style={{ padding: 'var(--space-5)', background: 'var(--color-bg)' }}>
-          {preview}
-        </TabPanel>
-        <TabPanel value="code" style={{ padding: 0 }}>
-          <Textarea variant="code" defaultValue={code.trim()} />
-        </TabPanel>
-      </Tabs>
+    <div style={{ border: '1px solid var(--color-border-strong)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+      {/* Light title bar — a purple pixel star anchors it; only the active tab carries color. */}
+      <div
+        role="tablist"
+        aria-label="Example"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-2)',
+          height: 42,
+          padding: '0 var(--space-2) 0 var(--space-3)',
+          background: 'var(--color-bg-subtle)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg)' }}>
+          <PixelMark name="star" size={13} style={{ color: 'var(--color-accent)' }} />
+          Example
+        </span>
+        <span style={{ marginLeft: 'auto', display: 'flex', gap: 2 }}>
+          {tab('preview', 'Preview')}
+          {tab('code', 'Code')}
+        </span>
+      </div>
+
+      <div
+        role="tabpanel"
+        id={panelId('preview')}
+        aria-labelledby={tabId('preview')}
+        hidden={active !== 'preview'}
+        style={{ padding: 'var(--space-5)', background: 'var(--color-bg)' }}
+      >
+        {preview}
+      </div>
+
+      {/* Code view stays on the light surface, matching the rest of the docs. */}
+      <div
+        role="tabpanel"
+        id={panelId('code')}
+        aria-labelledby={tabId('code')}
+        hidden={active !== 'code'}
+        style={{ background: 'var(--color-bg-subtle)', overflow: 'auto', maxHeight: 480 }}
+      >
+        <pre style={{ margin: 0, padding: 'var(--space-5)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', lineHeight: 'var(--leading-loose)', color: 'var(--color-fg)', whiteSpace: 'pre', tabSize: 2 }}>
+          {highlight(code.trim())}
+        </pre>
+      </div>
     </div>
   );
 }
