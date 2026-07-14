@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useId, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { Inbox, Menu as MenuIcon, PenSquare, Plus, Search } from 'pixelarticons/react';
 import {
   Alert,
@@ -6,6 +6,7 @@ import {
   Badge,
   Breadcrumb,
   Button,
+  ButtonGroup,
   Card, CardBody, CardFooter, CardHeader,
   Checkbox,
   Chip,
@@ -52,55 +53,19 @@ import { highlight } from '../lib/highlight';
 
 // ─── PreviewCode ──────────────────────────────────────────────────────────────
 
+const PREVIEW_CODE_ITEMS = [
+  { value: 'preview', label: 'Preview' },
+  { value: 'code', label: 'Code' },
+];
+
 function PreviewCode({ preview, code }: { preview: ReactNode; code: string }) {
   const [active, setActive] = useState<'preview' | 'code'>('preview');
-  const uid = useId();
-  const tabId = (k: string) => `${uid}-${k}-tab`;
-  const panelId = (k: string) => `${uid}-${k}-panel`;
-
-  // Segmented toggle typed in the system sans (matches Button/Tab), with the
-  // active tab shown as a lime "stamp" — the signature accent on an inked bar.
-  const tab = (key: 'preview' | 'code', label: string) => {
-    const selected = active === key;
-    return (
-      <button
-        type="button"
-        role="tab"
-        id={tabId(key)}
-        aria-selected={selected}
-        aria-controls={panelId(key)}
-        tabIndex={selected ? 0 : -1}
-        onClick={() => setActive(key)}
-        onKeyDown={(e) => {
-          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            setActive((a) => (a === 'preview' ? 'code' : 'preview'));
-          }
-        }}
-        style={{
-          fontFamily: 'inherit',
-          fontSize: 'var(--text-sm)',
-          fontWeight: 'var(--weight-medium)',
-          lineHeight: 1,
-          padding: '6px 12px',
-          border: 'none',
-          borderRadius: 'var(--radius-sm)',
-          cursor: 'pointer',
-          background: selected ? 'var(--color-signal-lime)' : 'transparent',
-          color: selected ? 'var(--lime-700)' : 'var(--color-fg-muted)',
-        }}
-      >
-        {label}
-      </button>
-    );
-  };
+  const sectionTitle = useContext(SectionTitleContext);
 
   return (
-    <div style={{ border: '1px solid var(--color-border-strong)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+    <div style={{ border: '1px solid var(--color-border-strong)', borderRadius: 'var(--radius-md)' }}>
       {/* Light title bar — a purple pixel star anchors it; only the active tab carries color. */}
       <div
-        role="tablist"
-        aria-label="Example"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -109,35 +74,31 @@ function PreviewCode({ preview, code }: { preview: ReactNode; code: string }) {
           padding: '0 var(--space-2) 0 var(--space-3)',
           background: 'var(--color-bg-subtle)',
           borderBottom: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
         }}
       >
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg)' }}>
-          <PixelMark name="star" size={13} style={{ color: 'var(--color-accent)' }} />
-          Example
+        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-medium)', color: 'var(--color-fg)' }}>
+          {sectionTitle}
         </span>
-        <span style={{ marginLeft: 'auto', display: 'flex', gap: 2 }}>
-          {tab('preview', 'Preview')}
-          {tab('code', 'Code')}
-        </span>
+        <ButtonGroup
+          style={{ marginLeft: 'auto' }}
+          items={PREVIEW_CODE_ITEMS}
+          value={active}
+          onChange={(v) => setActive(v as 'preview' | 'code')}
+        />
       </div>
 
       <div
-        role="tabpanel"
-        id={panelId('preview')}
-        aria-labelledby={tabId('preview')}
         hidden={active !== 'preview'}
-        style={{ padding: 'var(--space-5)', background: 'var(--color-bg)' }}
+        style={{ padding: 'var(--space-5)', background: 'var(--color-bg)', borderRadius: '0 0 var(--radius-md) var(--radius-md)' }}
       >
         {preview}
       </div>
 
       {/* Code view stays on the light surface, matching the rest of the docs. */}
       <div
-        role="tabpanel"
-        id={panelId('code')}
-        aria-labelledby={tabId('code')}
         hidden={active !== 'code'}
-        style={{ background: 'var(--color-bg-subtle)', overflow: 'auto', maxHeight: 480 }}
+        style={{ background: 'var(--color-bg-subtle)', overflow: 'auto', maxHeight: 480, borderRadius: '0 0 var(--radius-md) var(--radius-md)' }}
       >
         <pre style={{ margin: 0, padding: 'var(--space-5)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', lineHeight: 'var(--leading-loose)', color: 'var(--color-fg)', whiteSpace: 'pre', tabSize: 2 }}>
           {highlight(code.trim())}
@@ -150,7 +111,7 @@ function PreviewCode({ preview, code }: { preview: ReactNode; code: string }) {
 // ─── Layout helpers ──────────────────────────────────────────────────────────
 
 const NAV_GROUPS: { label: string; items: string[] }[] = [
-  { label: 'Actions', items: ['Button'] },
+  { label: 'Actions', items: ['Button', 'ButtonGroup'] },
   { label: 'Forms', items: ['Input', 'Textarea', 'Select', 'Combobox', 'Checkbox', 'Radio', 'Switch', 'Slider', 'DatePicker', 'FormField'] },
   { label: 'Layout', items: ['Container', 'Row & Col', 'Divider'] },
   { label: 'Navigation', items: ['Tabs', 'Breadcrumb', 'Pagination', 'Menu', 'ContextMenu'] },
@@ -162,15 +123,18 @@ const NAV_GROUPS: { label: string; items: string[] }[] = [
 ];
 
 const SearchContext = createContext('');
+const SectionTitleContext = createContext('');
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   const search = useContext(SearchContext);
   if (search.trim() && !title.toLowerCase().includes(search.toLowerCase())) return null;
   return (
-    <section id={id} style={{ scrollMarginTop: '64px' }}>
-      <Typography variant="h2" style={{ marginBottom: 'var(--space-5)' }}>{title}</Typography>
-      <Col gap={6}>{children}</Col>
-    </section>
+    <SectionTitleContext.Provider value={title}>
+      <section id={id} style={{ scrollMarginTop: '64px' }}>
+        <Typography variant="h2" style={{ marginBottom: 'var(--space-5)' }}>{title}</Typography>
+        <Col gap={6}>{children}</Col>
+      </section>
+    </SectionTitleContext.Provider>
   );
 }
 
@@ -409,6 +373,46 @@ export function Example() {
 <Button variant="ghost" iconOnly aria-label="Add">
   <Plus width="14" height="14" />
 </Button>`}
+                  />
+                </Block>
+              </Section>
+
+              <SectionDivider />
+
+              {/* ── BUTTON GROUP ── */}
+              <Section id="buttongroup" title="ButtonGroup">
+                <Typography variant="body2" color="muted" style={{ marginBottom: 'var(--space-2)' }}>
+                  Segmented control for switching between a small, fixed set of mutually exclusive options. Fully controlled via <code>value</code> and <code>onChange</code>. Individual items can be disabled.
+                </Typography>
+                <Block label="Default">
+                  <PreviewCode
+                    preview={<ButtonGroupBasicExample />}
+                    code={`const [view, setView] = useState('list');
+
+<ButtonGroup
+  value={view}
+  onChange={setView}
+  items={[
+    { value: 'list',  label: 'List' },
+    { value: 'grid',  label: 'Grid' },
+    { value: 'table', label: 'Table' },
+  ]}
+/>`}
+                  />
+                </Block>
+                <Block label="With disabled item">
+                  <PreviewCode
+                    preview={<ButtonGroupDisabledExample />}
+                    code={`<ButtonGroup
+  value="day"
+  onChange={setPeriod}
+  items={[
+    { value: 'day',   label: 'Day' },
+    { value: 'week',  label: 'Week' },
+    { value: 'month', label: 'Month' },
+    { value: 'year',  label: 'Year', disabled: true },
+  ]}
+/>`}
                   />
                 </Block>
               </Section>
@@ -2646,6 +2650,37 @@ function MenuExample() {
       <Menu trigger={<Button variant="secondary">Actions</Button>} items={items} />
       <Menu trigger={<Button variant="ghost" size="sm">More ▾</Button>} items={items} placement="bottom-end" />
     </Row>
+  );
+}
+
+function ButtonGroupBasicExample() {
+  const [view, setView] = useState('list');
+  return (
+    <ButtonGroup
+      value={view}
+      onChange={setView}
+      items={[
+        { value: 'list', label: 'List' },
+        { value: 'grid', label: 'Grid' },
+        { value: 'table', label: 'Table' },
+      ]}
+    />
+  );
+}
+
+function ButtonGroupDisabledExample() {
+  const [period, setPeriod] = useState('day');
+  return (
+    <ButtonGroup
+      value={period}
+      onChange={setPeriod}
+      items={[
+        { value: 'day', label: 'Day' },
+        { value: 'week', label: 'Week' },
+        { value: 'month', label: 'Month' },
+        { value: 'year', label: 'Year', disabled: true },
+      ]}
+    />
   );
 }
 

@@ -39,7 +39,7 @@
 }
 .badge[data-variant='soft'][data-tone='danger'] {
   background: var(--color-danger-subtle);
-  color: var(--color-danger);
+  color: var(--color-danger-fg);
 }
 .badge[data-variant='soft'][data-tone='lime'] {
   background: var(--color-signal-lime-subtle);
@@ -61,8 +61,8 @@
 .badge[data-variant='solid'][data-tone='warning'] { background: var(--color-warning); color: var(--color-fg-on-vivid-fill); }
 .badge[data-variant='solid'][data-tone='danger']  { background: var(--color-danger);  color: var(--color-fg-on-accent); }
 /* Bright signal tints need dark ink, not white, to stay legible. */
-.badge[data-variant='solid'][data-tone='lime'] { background: var(--color-signal-lime); color: var(--lime-700); }
-.badge[data-variant='solid'][data-tone='pink'] { background: var(--color-signal-pink); color: var(--pink-700); }
+.badge[data-variant='solid'][data-tone='lime'] { background: var(--color-signal-lime); color: var(--color-signal-lime-fg); }
+.badge[data-variant='solid'][data-tone='pink'] { background: var(--color-signal-pink); color: var(--color-signal-pink-fg); }
 
 /* --- Outline variant --- */
 .badge[data-variant='outline'] {

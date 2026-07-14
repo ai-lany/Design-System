@@ -35,8 +35,13 @@
 }
 
 .item[data-focused],
-.item:hover:not(:disabled) {
+.item:hover:not(:disabled),
+.item:focus-visible {
   background: var(--color-bg-subtle);
+}
+
+.item:focus-visible {
+  outline: none;
 }
 
 .item:disabled {
