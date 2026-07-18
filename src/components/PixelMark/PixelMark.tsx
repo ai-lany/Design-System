@@ -15,6 +15,10 @@ export interface PixelMarkProps extends Omit<SVGAttributes<SVGSVGElement>, 'name
  * A small, crisp-edged pixel glyph used as a brand accent — logo marks, corner
  * brackets, status bullets. Deliberately tiny: pixel art is the signature here,
  * never the whole surface. `currentColor` fills every pixel, so color it via CSS.
+ *
+ * Every glyph is drawn on a shared 8×8 grid, so any size that is a multiple of
+ * 8 (8, 16, 24, 32…) maps each grid cell to a whole number of pixels and renders
+ * crisp. Keep new glyphs on the 8×8 viewBox, and avoid non-multiple-of-8 sizes.
  */
 type Glyph = { viewBox: string; rects: [number, number, number, number][] };
 
@@ -28,8 +32,8 @@ const GLYPHS: Record<PixelMarkName, Glyph> = {
     ],
   },
   corner: {
-    viewBox: '0 0 6 6',
-    rects: [[0, 0, 1, 1], [1, 0, 1, 1], [2, 0, 1, 1], [0, 1, 1, 1], [0, 2, 1, 1]],
+    viewBox: '0 0 8 8',
+    rects: [[0, 0, 4, 1], [0, 1, 1, 3]],
   },
   arrow: {
     viewBox: '0 0 8 8',
@@ -40,8 +44,8 @@ const GLYPHS: Record<PixelMarkName, Glyph> = {
     ],
   },
   dot: {
-    viewBox: '0 0 4 4',
-    rects: [[1, 0, 2, 1], [0, 1, 4, 2], [1, 3, 2, 1]],
+    viewBox: '0 0 8 8',
+    rects: [[2, 0, 4, 2], [0, 2, 8, 4], [2, 6, 4, 2]],
   },
   bolt: {
     viewBox: '0 0 8 8',
