@@ -123,6 +123,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
           aria-invalid={hasError || undefined}
           aria-describedby={helper ? helperId : undefined}
           value={value}
+          onChange={onChange}
           style={{ resize }}
           {...rest}
         />
